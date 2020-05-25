@@ -14,7 +14,7 @@ These tools and the methodology were developed at the [Institut für Bauklimatik
 ## Motivation
 
 Engineering/scientific monitoring typically starts small with a few sensors that can be read and analyzed by users in suitable intervals. 
-As soon as number of sensors increases and measurement frequency becomes higher (semi-hourly or minutely values), *retrieving* and *checking* the measurement data manually becomes a cumbersome and error-prone process.
+As soon as the number of sensors increases and measurement frequency becomes higher (semi-hourly or minutely values), *retrieving* and *checking* the measurement data manually becomes a cumbersome and error-prone process.
 
 Here, the *MonVerifyTools* step in and assist with automated functionality to:
 
@@ -25,7 +25,7 @@ Here, the *MonVerifyTools* step in and assist with automated functionality to:
 - log results of checks to log files for easy screening by human-users
 - move offending files to separate review directory, and move correct files to "ready for processing" directories
 
-Basically, you can think of the *MonVerifyTools* as a quality assurance interim step, between *raw data collection* and *actual data processing* (import into monitoring software, run scripts or even just dump it into LibreOffice or Excel).
+Basically, you can think of the *MonVerifyTools* as a quality assurance interim step, between *raw data collection* and *actual data processing*.
 
 ![Overview](doc/Overview.png)
 
@@ -39,4 +39,4 @@ Basically, it's a Python script that scans a directory structure for rule files,
 
 For now, see [documentation](doc/MonVerifyTools_Dokumentation.pdf) (currently only in German, but source code is documented in english).
 
-Btw, the file format used by the *MonVerifyTools* is natively supported by the free scientific post-processing software [PostProc 2](https://bauklimatik-dresden.de/postproc/index.php), which makes it very easy to deal with frequently update data (and creates nice diagrams as well :-).
+Btw, the file format used by the *MonVerifyTools* is natively supported by the free scientific post-processing software [PostProc 2](https://bauklimatik-dresden.de/postproc/index.php), which makes it very easy to deal with frequently updated data (and creates nice diagrams as well :-).
