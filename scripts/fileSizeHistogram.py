@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+#
+# Developed at IBK, TU Dresden, Germany
+#
+# Authors: Andreas Nicolai <andreas.nicolai -at- tu-dresden[dot]de>
+#
+# License: BSD(2) License, see LICENSE file
 
 import matplotlib.pyplot as plt
 import numpy as np
