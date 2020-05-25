@@ -16,8 +16,8 @@ Here, the MonVerifyTools step in and assist with automated functionality to:
 - log results of checks to log files for easy screening by human-users
 - move offending files to separate review directory, and move correct files to "ready for processing" directories
 
-Basically, you can think of the *MonVerifyTools* as a quality ensurance interim step, between *raw data collection* and *actual data processing* (import into monitoring software, run scripts or even just dump it into LibreOffice or Excel).
+Basically, you can think of the *MonVerifyTools* as a quality assurance interim step, between *raw data collection* and *actual data processing* (import into monitoring software, run scripts or even just dump it into LibreOffice or Excel).
 
 ## How?
 
-...see docs.
+...see docs. TODO...
