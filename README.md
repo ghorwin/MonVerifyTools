@@ -1,3 +1,5 @@
+![Logos](doc/Logos.svg)
+
 # MonVerifyTools
 
 A set of scripts to automatically check the content of periodically obtained measurement data files, useful for larger monitoring projects.
