@@ -96,7 +96,7 @@ class ConfigFiles:
 				raise RuntimeError("Missing mandatory 'ExpectedFiles' array in exp file '{}'.".format(expFilePath))
 			for expectedFile in data['ExpectedFiles']:
 				if len(expectedFile) != 10:
-					raise RuntimeError("Invalid expected file definition: {}".format(expectedFile))
+					raise RuntimeError("Invalid expected file definition, expected 10 columns, got: {}".format(expectedFile))
 
 				name = expectedFile[0]
 				# check that name is not already given
