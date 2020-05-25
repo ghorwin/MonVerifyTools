@@ -1,7 +1,7 @@
 {
     "ExpectedFiles" : [
-		["Fehlertests/Test_","IBK_TimeSeries",25314,0,72,0,"Fehlertests.ref","",300],
-		["Fehlertests/TestNoFilesize_","IBK_TimeSeries",0,0,72,0,"Fehlertests.ref","",0]
+		["Fehlertests/Test_","IBK_TimeSeries",25314,0,72,0,"Fehlertests.ref","",300,0],
+		["Fehlertests/TestNoFilesize_","IBK_TimeSeries",0,0,72,0,"Fehlertests.ref","",0, 0]
     ],
     "BypassFiles" : [
 		"Fehlertests/readme.md",

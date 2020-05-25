@@ -5,6 +5,8 @@ rm -rf bypass/Fehlertests
 rm -rf review/Fehlertests
 rm -rf review/TestHaus
 
-rm log/errors
+rm log/errors_*
 rm log/processed
+rm log/missing
 
+git checkout -- dropbox/Fehlertests
