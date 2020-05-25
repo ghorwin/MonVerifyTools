@@ -20,8 +20,9 @@ Here, the MonVerifyTools step in and assist with automated functionality to:
 
 Basically, you can think of the *MonVerifyTools* as a quality assurance interim step, between *raw data collection* and *actual data processing* (import into monitoring software, run scripts or even just dump it into LibreOffice or Excel).
 
-## How?
-
 ![Overview](doc/Overview.png)
 
-...see docs. TODO...
+## How?
+
+For now, see [documentation](doc/MonVerifyTools_Dokumentation.pdf) (currently only in German, but source code is documented in english).
+
