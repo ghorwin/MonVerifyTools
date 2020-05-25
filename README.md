@@ -4,6 +4,13 @@
 
 A set of scripts to automatically check the content of periodically obtained measurement data files, useful for larger monitoring projects.
 
+These tools and the methodology were developed at the [Institut für Bauklimatik, TU Dresden](https://tu-dresden.de/bu/architektur/ibk), during various research projects. Some were:
+
+- EnEff:Stadt - Verbundvorhaben: *Modellhaftes innerstädtisches Gebiet "Altes Zöllnerviertel Weimar"* (FKZ 03ET1173C)
+- *Forschungsprüfstand für multtifunktiionale aktive Fassadensysteme mit Raumankopplung*, im Rahmen der SAB Förderung "Anwendungsorientierte Forschung an innovativen Energietechniken"
+- *"Carbon Concrete Composite C³" - Carbonbeton mit integrierten bauklimatischen Funktionen*, ein Zwandzig20 C³ Projekt (BMBF)
+
+
 ## Motivation
 
 Engineering/scientific monitoring typically starts small with a few sensors that can be read and analyzed by users in suitable intervals. 
