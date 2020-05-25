@@ -1,0 +1,21 @@
+{
+    "ConfigServer" : {
+	"CorrectionFileFormat" : "binary"
+    },
+    "ExpectedFiles" : [
+	["./p1.1/demo1_","IBK_TimeSeries",19836,0,293,1,0,4,"./p1.1/demo1.ref","./p1.1/demo1.phy",0],
+	["./p1.2/demo2_","IBK_TimeSeries",19836,0,293,1,0,4,"./p1.2/demo2.ref","./p1.2/demo2.phy",0],
+	["./p1.3/demo3_","IBK_TimeSeries",19836,0,293,1,0,4,"./p1.1/demo1.ref","./p1.1/demo1.phy",0],
+	["./p1.4/demo4_","IBK_TimeSeries",19836,0,293,1,0,4,"./p1.1/demo1.ref","./p1.1/demo1.phy",0],
+	["./p1.5/demo5_","IBK_TimeSeries",19836,0,293,1,0,4,"./p1.1/demo1.ref","./p1.1/demo1.phy",0]
+    ],
+    "BypassFiles" :
+	["./p1.4/",
+	"./p1.3"
+	],
+    "AutoCorrect" : {
+	"SingleValue"     : "AUTO_LINEAR",
+	"MultileValue"    : "AUTO_LINEAR_TIME",
+	"WholeDayMissing" : "AUTO_LINEAR_TIME"
+	}
+}

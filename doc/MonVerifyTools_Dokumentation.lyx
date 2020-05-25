@@ -1,0 +1,9134 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{parskip}
+
+\usepackage[hang,scriptsize]{subfigure}
+\usepackage[format=hang,
+font={footnotesize},
+labelfont={bf},
+margin=1cm,
+aboveskip=5pt,
+position=bottom]{caption}
+
+\usepackage{float}
+\usepackage{color}
+\usepackage{calc}
+
+\definecolor{linkblue}{rgb}{0,0,0.4}
+\definecolor{navy}{rgb}{0,0,0.3}
+\definecolor{light-gray}{gray}{0.98}
+\definecolor{dark-gray}{gray}{0.45}
+
+\usepackage{dsfont}
+
+\usepackage[utf8]{inputenc}
+
+\newcommand{\wframe}[1]{\frame{#1}}
+
+\usepackage[ruled,vlined]{algorithm2e}
+
+\usepackage{booktabs}
+
+\usepackage{lastpage}
+
+\usepackage[a-2b]{pdfx}
+
+\begin{filecontents*}{\jobname.xmpdata}
+  \Title{Dokumentation der MonVerifyTools}
+  \Author{A. Nicolai and S. Vogelsang and A. Söhnchen}
+  \Keywords{Messdatenerfassung\sep Prüfung}
+  \Publisher{Qucosa}
+\end{filecontents*}
+\end_preamble
+\use_default_options false
+\begin_modules
+enumitem
+\end_modules
+\maintain_unincluded_children false
+\begin_local_layout
+### Inserted by lyx2lyx (biblatex emulation) ###
+Provides natbib 1
+### End of insertion by lyx2lyx (biblatex emulation) ###
+\end_local_layout
+\language ngerman
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "lmodern" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize 10
+\spacing single
+\use_hyperref true
+\pdf_title "Validation of the FMI co-simulation master program MasterSim"
+\pdf_author "Andreas Nicolai"
+\pdf_keywords "Co-Simulation, FMI, validation, standard compliance, accuracy"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_quoted_options "linkcolor=linkblue, citecolor=linkblue, urlcolor=linkblue, bookmarksnumbered=true"
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plaindin
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Stichwortverzeichnis
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2.5cm
+\topmargin 2.5cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip smallskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style german
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\listings_params "language={C++},basicstyle={\scriptsize\ttfamily\color{black}},commentstyle={\ttfamily\itshape\color{dark-gray}},stepnumber=1,showspaces=false,showstringspaces=false,showtabs=false,frame=single,tabsize=4,captionpos=b,breaklines=true,breakatwhitespace=false,texcl=true,postbreak={\mbox{\textcolor{linkblue}{$\hookrightarrow$}\space}}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+MonVerifyTools - Dokumentation
+\end_layout
+
+\begin_layout Author
+Andreas Nicolai, Stefan Vogelsang, Andreas Söhnchen
+\begin_inset Newline newline
+\end_inset
+
+
+\size normal
+Institut für Bauklimatik, TU Dresden
+\size default
+
+\begin_inset Newline newline
+\end_inset
+
+
+\family typewriter
+\size footnotesize
+stefan.vogelsang@tu-dresden.de
+\end_layout
+
+\begin_layout Abstract
+Die 
+\emph on
+MonVerifyTools
+\emph default
+ sind Python-Scripte für eine automatische Prüfung von Messdaten hinsichtlich
+ Korrektheit und Vollständigkeit.
+ Sie dienen in erster Linie dazu, selbst bei einer Vielzahl von Sensoren
+ und Messdaten Fehler, z.B.
+ Sensorausfall oder fehlerhafte Messwerte, schnell zu erkennen.
+ Zudem beinhalten die Scripte halb-automatische Korrekturmechanismen, um
+ fehlerhafte/unvollständige Messdaten sinnvoll zu korrigieren und ergänzen,
+ sodass eine nachfolgende Auswertung möglich ist.
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{fancy}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fancyhf{} %alle Kopf- und Fußzeilenfelder bereinigen
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+fancyhead[L]{
+\backslash
+includegraphics[width=3cm]{logolinks}} %Kopfzeile links
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+fancyhead[C]{
+\backslash
+includegraphics[width=9.4cm]{logomitte}} %zentrierte Kopfzeile
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+fancyhead[R]{
+\backslash
+includegraphics[width=2.5cm]{logorechts}} %Kopfzeile rechts
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+headrulewidth}{0pt} %obere Trennlinie
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fancyfoot[C]{
+\backslash
+small Seite 
+\backslash
+thepage
+\backslash
+ von
+\backslash
+ 
+\backslash
+pageref{LastPage} } %Seitennummer
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+footrulewidth}{0.4pt} %untere Trennlinie
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\size small
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+fancyhf{} %alle Kopf- und Fußzeilenfelder bereinigen
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+fancyhead[L]{} %Kopfzeile links
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+fancyhead[C]{} %zentrierte Kopfzeile
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fancyhead[R]{MonVerifyTools - Dokumentation und Anleitung}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+fancyhead[R]{
+\backslash
+includegraphics[width=4cm]{gwt_logo}} %Kopfzeile rechts
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+headrulewidth}{0.4pt} %obere Trennlinie
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fancyfoot[L]{
+\backslash
+small 
+\backslash
+today} %Seitennummer
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fancyfoot[C]{
+\backslash
+small Nicolai, Vogelsang und Söhnchen } %Seitennummer
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fancyfoot[R]{
+\backslash
+small Seite 
+\backslash
+thepage
+\backslash
+ von
+\backslash
+ 
+\backslash
+pageref{LastPage} } %Seitennummer
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+footrulewidth}{0.4pt} %untere Trennlinie
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Einführung
+\end_layout
+
+\begin_layout Subsection
+Konzept
+\end_layout
+
+\begin_layout Standard
+Wenn Messdaten automatisch erfasst werden, besteht immer auch die Möglichkeit
+ des Ausfalls einzelner Sensoren, bzw.
+ Erfassung von fehlerhaften Daten.
+ Bei automatischer Langzeiterfassung können nicht alle Sensorwerte manuell
+ überprüft werden, bzw.
+ ist eine manuelle Prüfung sehr zeitaufwändig.
+\end_layout
+
+\begin_layout Standard
+Daher ist nachfolgend eine Prüfmethodik und ein Programm (Python-Skript)
+ beschrieben, welches diese Prüfung automatisiert ermöglicht und den Zeitaufwand
+ dafür drastisch reduziert.
+\end_layout
+
+\begin_layout Standard
+Weiterhin ist es notwendig, fehlerhafte oder fehlende Werte für die nachfolgende
+ Auswertung der Daten sinnvoll zu ergänzen bzw.
+ zu korrigieren.
+ Auch hier ist eine manuelle Korrektur mitunter sehr zeitaufwändig.
+ Auch sind bestimmte Korrekturmechanismen, wie z.B.
+ das lineare Verschneiden von Daten, manuell kaum möglich.
+ Auch für diese Arbeitsschritte bietet das nachfolgend beschriebene Programm
+ die notwendige Funktionalität.
+\end_layout
+
+\begin_layout Standard
+Voraussetzung für die automatische Prüfung ist ein einheitliches Messdaten-Datei
+format.
+ Dieses 
+\emph on
+Monitoring File Format
+\emph default
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Vogelsang, S.
+ und Söhnchen, A.; 
+\emph on
+Monitoring Tools File Specification
+\emph default
+, Technischer Bericht, 2016, TU Dresden,
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://nbn-resolving.org/urn:nbn:de:bsz:14-qucosa-199034
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ wird vom MonVerifyTools-Skript verwendet und muss daher von allen Messerfassung
+ssystemen bereitgestellt werden.
+\end_layout
+
+\begin_layout Standard
+Eine Datei hat im Prinzip folgendes Format:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+SensorID,G1,SensorName1,SensorName2,G2,SensorName3,SensorName4,SensorName5
+\end_layout
+
+\begin_layout Plain Layout
+
+Unit,,T,%,,%,T,Pa
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+2016-03-04 00:00:00,G1,11.41,44.3,G2,55.3,-5.2,101343
+\end_layout
+
+\begin_layout Plain Layout
+
+2016-03-04 00:00:05,G1,11.41,44.3,G2,55.3,-5.2,101343
+\end_layout
+
+\begin_layout Plain Layout
+
+2016-03-04 00:00:10,G1,11.41,44.3,G2,55.3,-5.2,101343
+\end_layout
+
+\begin_layout Plain Layout
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Mit den folgenden Eckdaten der Formatspezifikation:
+\end_layout
+
+\begin_layout Itemize
+Header und Datensektion sind durch 
+\emph on
+exakt 
+\emph default
+eine Leerzeile getrennt.
+\end_layout
+
+\begin_layout Itemize
+Alle Spalten in der Datei sind mit Komma getrennt, Zahlen sind im englischen
+ Format (221.21 bzw.
+ 1.32e-4) abgelegt.
+\end_layout
+
+\begin_layout Itemize
+Zeitstempel haben das Format: 
+\family typewriter
+yyyy-mm-ss HH:MM:SS
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+Die Kopfzeile 
+\family typewriter
+SensorID
+\family default
+ ist Pflicht, die 
+\family typewriter
+Unit
+\family default
+-Zeile mit den dazugehörigen IBK-Einheiten ist optional.
+ Weitere Kopfzeilen können beliebig hinzugefügt werden.
+\end_layout
+
+\begin_layout Itemize
+Es gibt beliebig viele Sensor-Namen, welche Sensorgruppen (im Beispiel oben
+ G1 und G2) mit beliebigem Namen zugeordnet sein können.
+ Die Spalten mit den Sensorgruppen haben keine Einheit und keine Zahlen
+ bei den Datensamples (werden beim Lesen ignoriert, d.h.
+ in den Datensample-Zeilen können in den Sensorgruppen Spalten beliebige
+ Werte/Zeichenketten stehen, wie G1 und G2 im obigen Beispiel).
+\end_layout
+
+\begin_layout Itemize
+Die Anzahl der Spalten in den Sample-Zeilen (Datensektion) muss 
+\emph on
+exakt
+\emph default
+ mit den Spalten in der 
+\family typewriter
+SensorID
+\family default
+-Kopfzeile übereinstimmen.
+ Jede Sensor-Spalte muss einen Wert enthalten.
+\end_layout
+
+\begin_layout Subsection
+Workflow
+\end_layout
+
+\begin_layout Subsubsection
+Datenerfassung
+\end_layout
+
+\begin_layout Standard
+Auf Messrechnern laufen Skripte/Programme, die automatisiert die angeschlossenen
+ Datenlogger abfragen und die resultierenden Daten in das 
+\emph on
+Monitoring File Format
+\emph default
+ konvertieren.
+ Alternativ kann die Datenerfassung auch manuell erfolgen, z.B.
+ mit Temperatur/Luftfeuchte-Datenloggern, deren Daten ausgelesen und in
+ das 
+\emph on
+Monitoring File Format
+\emph default
+ konvertiert werden.
+\end_layout
+
+\begin_layout Subsubsection
+Datentransfer
+\end_layout
+
+\begin_layout Standard
+Die Messrechner sind mit dem Internet verbunden.
+ In regelmäßigen Abständen verbinden sich die Clients mit dem Messdatenserver
+ und kopieren neue Messdaten in das Eingangsverzeichnis.
+ Bei Datenerfassung im Feld können verschiedene Mess-Clients (z.B.
+ Raspi-Computer) individuell Messdaten an den Messdaten-Server schicken.
+ Oder es kann ein zentraler Mess-Client-Rechner vor Ort eingerichtet werden,
+ der die Messdaten der einzelnen Erfassungsrechner einsammelt und zentral
+ an den Mess-Server schickt.
+\end_layout
+
+\begin_layout Standard
+Alternativ können Messdaten auch manuell in das Eingangsverzeichnis auf
+ dem Messdatenserver kopiert werden.
+\end_layout
+
+\begin_layout Subsubsection
+Datenprüfung und Archivierung
+\end_layout
+
+\begin_layout Standard
+Auf dem Messdatenserver läuft nun in regelmäßigen Abständen das Prüfprogram,
+ das 
+\emph on
+MonVerifyTool
+\emph default
+.
+ Dieses Programm prüft neu eingegangene Daten auf Korrektheit und Vollständigkei
+t.
+ Weiterhin wird geprüft, ob Daten auch erwartungsgemäß geliefert wurden.
+ Das Programm wird mit folgender Kommandozeile gestartet:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> python MonVerifyTools.py /path/to/projectRoot
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Abbildung
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Programmablaufdiagramm-für-MonVerifyTool"
+
+\end_inset
+
+ zeigt den grundsätzlichen Ablauf des Testprogramms.
+ Falls Fehler bei der Prüfung auftreten, werden fehlerhafte Dateien zur
+ Prüfung beiseite gelegt und die Projektbearbeiter informiert.
+ Die Unterprogramme sind im Kapitel
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Prüfungen"
+
+\end_inset
+
+ bzw.
+ im Abschnitt
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Vollständigkeitsprüfungen"
+
+\end_inset
+
+ näher erläutert.
+\end_layout
+
+\begin_layout Standard
+Korrekte Daten werden archiviert und können durch nachfolgende Post-Processing-P
+rogramme weiter verwendet werden.
+ Damit die Originaldaten nicht verloren gehen (z.B.
+ im Fall einer fehlerhaft angewendeten Korrekturvorschrift), werden die
+ Rohdaten in diesem Fall zusätzlich noch abgelegt, wobei die Rohdaten mit
+ verändertem Dateinamen (angehängtem 
+\family typewriter
+.original
+\family default
+) abgelegt werden.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename MonVerifyTool.pdf
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Programmablaufdiagramm-für-MonVerifyTool"
+
+\end_inset
+
+Programmablaufdiagramm für MonVerifyTool-Script
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Grundlegende Annahmen und Festlegungen
+\end_layout
+
+\begin_layout Itemize
+Server und Clients laufen in der gleichen Zeitzone mit gleich konfigurierten
+ Zeiteinstellungen (ohne Sommerzeit etc.).
+\end_layout
+
+\begin_layout Itemize
+Messdaten werden in Messprojekten verwaltet.
+ Es kann mehrere (Messdatenerfassung-)Projekte auf dem Datenerfassungsserver
+ geben, welche unabhängig voneinander bearbeitet, konfiguriert, reviewed
+ werden können.
+\end_layout
+
+\begin_layout Itemize
+Je Messprojekt werden Projektbearbeiter mit Zugriffsrechten ausgestattet
+ (siehe Abschnitt
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Datensicherheit-und-Zugriffskonz"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Itemize
+Je Messprojekt sollte es einen Mess-Client-Nutzer-Account.
+ Werden mehrere externe Clients für ein Projekt verwendet, nutzen diese
+ den gleichen Nutzeraccount (siehe Abschnitt
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Datensicherheit-und-Zugriffskonz"
+
+\end_inset
+
+).
+ Es ist jedoch möglich, mehrere Mess-Client-Nutzer anzulegen, allerdings
+ erhöht das den Verwaltungsaufwand, bringt keine weiteren Vorteile und ist
+ deshalb nicht zu empfehlen.
+\end_layout
+
+\begin_layout Itemize
+Das 
+\emph on
+MonVerifyTool
+\emph default
+-Script läuft regelmäßig zu einer definierten Tageszeit, z.B.
+ via cron-Job oder als Jenkins-Slave.
+ Letzteres bietet den Vorteil, dass Fehler sofort im Jenkins-Dashboard erkennbar
+ sind.
+\end_layout
+
+\begin_layout Itemize
+Neue Messdaten werden vom Client auf den Server via scp kopiert.
+ Damit während der Kopie nicht bereits lesend auf (teilweise) kopierte Daten
+ zugegriffen wird, muss das Kopieren und Auswerten zeitlich getrennt erfolgen.
+ Entprechend sind unterschiedliche Zeiten für den Datentransfer des Clients
+ und das Ausführen des Prüfprogramms auf dem und Server einzustellen.
+\end_layout
+
+\begin_layout Itemize
+Die erfassten Rohdaten werden unverändert aufbewahrt.
+ Korrigierte Dateien werden entsprechend gekennzeichnet und Details der
+ Korrekturen/Ergänzungen in einer Log-Datei vermerkt.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Datensicherheit-und-Zugriffskonz"
+
+\end_inset
+
+Datensicherheit und Zugriffskonzept
+\end_layout
+
+\begin_layout Standard
+Messdaten müssen vertraulich behandelt werden.
+ Auf den Messrechnern/Mess-Clients vor Ort haben nur Projektbearbeiter (d.h.
+ Admins dieser Geräte) lokalen und entfernten Zugang.
+\end_layout
+
+\begin_layout Standard
+Auf dem Messdatenserver werden alle projektspezifischen Daten in einer zugriffsg
+eschützten Verzeichnisstruktur verwaltet (siehe Abschnitt
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Server-seitig-Einrichtung"
+
+\end_inset
+
+ zu Details zur Einrichtung dieser Verzeichnisstruktur und Vergabe von Zugriffsr
+echten).
+\end_layout
+
+\begin_layout Standard
+Projektmitarbeiter erhalten einen Login für die Bearbeitung von Projekten,
+ d.h.
+ Erstellung und Anpassung von Konfigurationsdateien, Bearbeitung von zu
+ prüfenden Daten und manueller Korrektur von fehlerbehafteten Dateien, sowie
+ den Zugriff auf die archivierten Daten.
+\end_layout
+
+\begin_layout Standard
+Für Mess-Clients werden je Projekt ein Login vergeben, welches jedoch nicht
+ für SSH-Logins verwendet werden kann (keine Login-Shell).
+ Mit diesen Zugangsdaten können lediglich neue Messdaten in das Projekteingangsv
+erzeichnis 
+\family typewriter
+dropbox
+\family default
+ kopiert werden (siehe Abschnitt
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Verzeichnisstruktur"
+
+\end_inset
+
+).
+ Werden mehrere Clients für das gleiche Projekt verwendet, so teilen sich
+ diese diesen Zugang.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Verzeichnisstruktur"
+
+\end_inset
+
+Verzeichnisstruktur
+\end_layout
+
+\begin_layout Standard
+In jedem Projektverzeichnis wird folgende Verzeichnisstruktur abgebildet:
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
++ projectRoot
+\end_layout
+
+\begin_layout Plain Layout
+
+  + config                    - Verzeichnis für Konfigurationsdateien
+\end_layout
+
+\begin_layout Plain Layout
+
+  + dropbox                   - enthält Eingangsdaten (z.B.
+ von den Mess-Clients)
+\end_layout
+
+\begin_layout Plain Layout
+
+  + review                    - Verzeichnis für Dateien, welche der Nutzer
+ prüfen/korrigieren muss
+\end_layout
+
+\begin_layout Plain Layout
+
+  + log                       - Verzeichnis mit projektspezifischen Logdateien
+\end_layout
+
+\begin_layout Plain Layout
+
+  + archive                   - Verzeichnis mit archivierten Daten
+\end_layout
+
+\begin_layout Plain Layout
+
+  + bypass                    - Verzeichnis mit ungesehen/unverändert archiviert
+en Daten
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+config
+\family default
+ Enthält projektspezifische Konfigurationsdateien (
+\family typewriter
+*.exp
+\family default
+, 
+\family typewriter
+*.ref
+\family default
+ und 
+\family typewriter
+*.phy
+\family default
+)
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+dropbox
+\family default
+ Eingangsdatenverzeichnis; hier schreiben die Mess-Clients die Rohdaten
+ hinein.
+ Es können Unterverzeichnisse zur Strukturierung der Daten angelegt werden.
+ 
+\emph on
+Dateinamen müssen innerhalb der gesamten Verzeichnisstruktur unterhalb von
+ 
+\family typewriter
+\emph default
+dropbox
+\family default
+\emph on
+ eindeutig sein.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+review
+\family default
+ Verzeichnis, in dem fehlerhafte Datendateien abgelegt werden (unter Beibehaltun
+g der Verzeichnisstruktur des 
+\family typewriter
+dropbox
+\family default
+-Verzeichnisses), sodass manuelle Korrekturen möglich sind
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+log
+\family default
+ Verzeichnis mit Logdateien (siehe Abschnitt
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Log-Dateien"
+
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+archive
+\family default
+ Verzeichnis mit Archivdateien; unter Beibehaltung der Verzeichnisstruktur
+ des 
+\family typewriter
+dropbox
+\family default
+-Verzeichnisses werden hier alle geprüften/konvertierten/korrigierten Daten
+ abgelegt.
+\end_layout
+
+\begin_layout Description
+
+\family typewriter
+bypass
+\family default
+ Verzeichnis für Dateien, welche ohne Sichtung entsprechend definierter
+ Bypass-Regeln direkt von 
+\family typewriter
+dropbox
+\family default
+ nach 
+\family typewriter
+bypass
+\family default
+ verschoben werden.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Namenskonventionen-für-Messdaten"
+
+\end_inset
+
+Namenskonventionen für Messdatendateien
+\end_layout
+
+\begin_layout Standard
+Entsprechend der Spezifikation wird folgendes Dateinamenschema zwingend
+ vorgeschrieben:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+<prefix>_<yyyy-mm-dd>_<hh-MM-ss>.csv
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Jede Datei hat also exakt zwei Unterstrich-Zeichen 
+\family typewriter
+'_'
+\family default
+ im Namen.
+ Der Datums und Zeitstempel hat einschließlich des Unterstrich-Zeichens
+ exakt die Länge von 19 Zeichen.
+ Beispiele:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+demo2_2019-08-08_15:44:00.csv
+\end_layout
+
+\begin_layout Plain Layout
+
+zvw-hh-wg1-2s_2015-07-22_00-00-00.csv
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Alles vor dem ersten Unterstrich muss ein-eindeutig sein und wird zur Identifika
+tion der Datei-Regeln verwendet (siehe Abschnitt
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Expectation-Dateien-(*.exp)"
+
+\end_inset
+
+).
+ Im obigen Beispiel sind das folgende Dateinamenspräfixe:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+demo2_
+\end_layout
+
+\begin_layout Plain Layout
+
+zvw-hh-wg1-2s_
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Der nachfolgende Unterstrich dient der Unterscheidung von Namen, welche
+ in anderen Präfixen enthalten sind, z.B.
+ um folgende Dateien eindeutig zu unterscheiden:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+zvw-hh-wg1-2s_
+\end_layout
+
+\begin_layout Plain Layout
+
+zvw-hh-wg1_
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Server-seitig-Einrichtung"
+
+\end_inset
+
+Einrichtung des Messdaten-Servers
+\end_layout
+
+\begin_layout Subsection
+Zentrale oder dezentrale Einrichtung
+\end_layout
+
+\begin_layout Standard
+Unter 
+\emph on
+zentraler
+\emph default
+ Einrichtung wird verstanden, dass es einen zentralen Messdatenerfassungsserver
+ gibt, auf dem mehrere Messprojekte gleichzeitig verwaltet werden.
+ Auf diesem Server verwaltet der Admin die Projekterstellung, Gruppen und
+ Nutzer.
+ Eingerichtete Nutzer (Manager oder Messclients, siehe unten) arbeiten auf
+ diesem Server mit den vom Admin bereitgestellten Verzeichnissen.
+\end_layout
+
+\begin_layout Standard
+Unter 
+\emph on
+dezentraler
+\emph default
+ Einrichtung wird eine lokale Installation, z.B.
+ im eigenen Home-Verzeichnis verstanden.
+ Diese kann ohne Hilfe des Admins erfolgen, da keine Gruppen oder Nutzer
+ angelegt werden müssen (entspricht der typischen Einrichtung unter Windows).
+ 
+\end_layout
+
+\begin_layout Subsection
+Einrichtung eines neuen Projekts - dezentrale Einrichtung
+\end_layout
+
+\begin_layout Standard
+Die dezentrale Einrichtung ist sehr einfach.
+ Man führt das Script 
+\family typewriter
+createMonToolProject.sh
+\family default
+ aus und gibt ein Unterverzeichnis in einem vom Nutzer schreibbaren Verzeichnis
+ an.
+ Die Kommandozeilenargumente des Scripts sind:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+>./createMonToolProject.sh <Nutzer-Gruppe> <Nutzer-Gruppe> <Nutzer-Login>
+ <Projektbasisverzeichnis>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+also beispielsweise:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+>./createMonToolProject.sh andreas andreas andreas /home/andreas/messprojekt1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hinweis:
+\emph default
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "90col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Unter Linuxdistributionen wie Ubuntu wird zu jedem Loginnamen eine gleichnamige
+ Gruppe angelegt, also im obigen Beispiel gibt es im System eine Gruppe
+ 
+\family typewriter
+andreas
+\family default
+ und einen Login-Nutzernamen 
+\family typewriter
+andreas
+\family default
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Dezentrale Einrichtung unter Windows
+\end_layout
+
+\begin_layout Standard
+Es wird einfach die Verzeichnisststruktur aus Abschnitt
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Verzeichnisstruktur-und-Zugriffs"
+
+\end_inset
+
+ erstellt, allerdings ohne irgendwelche Zugriffsrechte anzupassen.
+\end_layout
+
+\begin_layout Subsection
+Einrichtung eines neuen Projekts - zentrale Einrichtung
+\end_layout
+
+\begin_layout Standard
+Die nachfolgend erläuterte Einrichtung der Gruppen und Nutzer ist nur für
+ dezentrale Einrichtung notwendig.
+\end_layout
+
+\begin_layout Subsubsection
+Gruppen
+\end_layout
+
+\begin_layout Standard
+Um den Zugriff auf die Verzeichnisse sinnvoll zu beschränken, werden für
+ jedes Messprojekt zwei Gruppen eingerichtet:
+\end_layout
+
+\begin_layout Itemize
+Gruppe für Projektmanager (mit Zugriff auf Konfigurationsdateien und Messdaten,
+ können Fehler korrigieren, Logdateien einsehen etc.), beispielsweise 
+\family typewriter
+GrpMessProjekt1Manager
+\end_layout
+
+\begin_layout Itemize
+Gruppe für Messclients (haben kein Home-Verzeichnis, dürfen ausschließlich
+ via scp Daten in das Projekt-Eingangsverzeichnis 
+\family typewriter
+dropbox
+\family default
+ kopieren), beispielsweise 
+\family typewriter
+GrpMessProjekt1Client
+\end_layout
+
+\begin_layout Subsubsection
+Nutzeraccounts
+\end_layout
+
+\begin_layout Standard
+Es werden typischerweise 3 Nutzer eingerichtet:
+\end_layout
+
+\begin_layout Enumerate
+Nutzer für die Messclients : nur Mitglied ihrer eigenen Gruppe und der Messproje
+kt-Client-Gruppe (also bspw.
+ 
+\family typewriter
+GrpMessProjekt1Client
+\family default
+)
+\end_layout
+
+\begin_layout Enumerate
+Nutzer für die Projektmanager (einer oder mehrere Projektverwalter) : sind
+ Mitglied der Gruppen für Manager und Clients (also bspw.
+ 
+\family typewriter
+GrpMessProjekt1Manager
+\family default
+ und 
+\family typewriter
+GrpMessProjekt1Client
+\family default
+)
+\end_layout
+
+\begin_layout Enumerate
+Nutzer für den Dienst, der automatisiert das Prüfskript ausführen soll (dafür
+ kann auch ein Projektmanageraccount verwendet werden) : ist ebenfalls Mitglied
+ beider Gruppen
+\end_layout
+
+\begin_layout Subsubsection
+Beispiel
+\end_layout
+
+\begin_layout Standard
+Nachfolgend werden die vom Systemadmin auszuführenden Schritte zum Einrichten
+ der Gruppen und Nutzer eines Projekts mit dem Namen 
+\family typewriter
+MessProjekt1
+\family default
+ aufgeführt:
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Gruppen einrichten
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> sudo groupadd GrpMessProjekt1Manager
+\end_layout
+
+\begin_layout Plain Layout
+
+> sudo groupadd GrpMessProjekt1Client
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Nutzer einrichten
+\end_layout
+
+\begin_layout Standard
+Einrichten eines neuen Mess-Client-Nutzers ohne eigenes Home-Verzeichnis:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> sudo adduser --system --no-create-home mp1client
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hinweis:
+\emph default
+ Unter Ubuntu wird zusätzlich noch eine Gruppe 
+\family typewriter
+mp1client
+\family default
+ eingerichtet.
+ Man könnte diese Gruppe auch anstelle der im Beispiel verwendeten Gruppe
+ 
+\family typewriter
+GrpMessProjekt1Client
+\family default
+ nehmen.
+\end_layout
+
+\begin_layout Standard
+Einrichten der Projektmanager und Projekt-Service Nutzer:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> sudo adduser mp1manager
+\end_layout
+
+\begin_layout Plain Layout
+
+> sudo adduser mp1service
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Gruppen zuordnen
+\end_layout
+
+\begin_layout Standard
+Nun wird die Datei 
+\family typewriter
+/etc/group
+\family default
+ vom Admin editiert, und in der Gruppe 
+\family typewriter
+GrpMessProjekt1Client
+\family default
+ alle drei neu erstellten Nutzer eingetragen.
+ In der Gruppe 
+\family typewriter
+GrpMessProjekt1Manager
+\family default
+ stehen nur die Nutzer 
+\family typewriter
+mp1manager
+\family default
+ und 
+\family typewriter
+mp1service
+\family default
+ drin.
+\end_layout
+
+\begin_layout Standard
+Die 
+\family typewriter
+/etc/group
+\family default
+ enthält nach diesen Schritte beispielsweise folgende Zeilen:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+.....
+\end_layout
+
+\begin_layout Plain Layout
+
+GrpMessProject1Manager:x:1006:mp1manager,mp1service
+\end_layout
+
+\begin_layout Plain Layout
+
+GrpMessProject1Client:x:1007:mp1manager,mp1service,mp1client
+\end_layout
+
+\begin_layout Plain Layout
+
+mp1client:x:999:
+\end_layout
+
+\begin_layout Plain Layout
+
+mp1manager:x:1001:
+\end_layout
+
+\begin_layout Plain Layout
+
+mp1service:x:1002:
+\end_layout
+
+\begin_layout Plain Layout
+
+....
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Verzeichnisstruktur-und-Zugriffs"
+
+\end_inset
+
+Verzeichnisstruktur und Zugriffsrechte
+\end_layout
+
+\begin_layout Paragraph
+Automatische Erstellung des Projektverzeichnissen
+\end_layout
+
+\begin_layout Standard
+Für das Einrichten der Projektverzeichnisstruktur und Setzen der Zugriffsrechte
+ kann das Script 
+\family typewriter
+createMonToolProject.sh
+\family default
+ ausgeführt werden.
+ Syntax:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+>sudo ./createMonToolProject.sh <Projektbearbeiter-Gruppe> <Mess-Client-Gruppe>
+ <SRV-User> <Projektbasisverzeichnis>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Also beispielsweise:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+>sudo ./createMonToolProject.sh GrpMessProjekt1Manager GrpMessProjekt1Client
+ mp1service /srv/data/MessProjekt1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+dabei muss das übergeordnete Verzeichnis 
+\family typewriter
+/srv/data
+\family default
+ erstellt sein und von normalen Nutzern erreichbar sein.
+ Typischerweise reicht:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+>sudo mkdir /srv/data
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Manuelle Erstellung des Projektverzeichnissen und Vergabe von Zugriffsrechten
+\end_layout
+
+\begin_layout Standard
+Zuerst wird das Projektbasisverzeichnisses, z.B.
+ unter 
+\family typewriter
+/srv/data/MessProjekt1
+\family default
+ erstellt
+\family typewriter
+, Verzeichnis bekommt Rechte rwxr_x___ 
+\family default
+und 
+\emph on
+mp1service:GrpMessProjekt1Client
+\emph default
+ als Nutzer/Group.
+\end_layout
+
+\begin_layout Standard
+Dann wird folgende Verzeichnisstruktur mit den jeweils angegebenen Nutzernamen
+ und Gruppen sowie Rechten erstellt:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+MessProject1/       mp1service:GrpMessProject1Client        rwx r_x ___
+\end_layout
+
+\begin_layout Plain Layout
+
+    archive         mp1service:GrpMessProject1Manager       rwx r_x ___
+\end_layout
+
+\begin_layout Plain Layout
+
+    bypass          mp1service:GrpMessProject1Manager       rwx r_x ___
+\end_layout
+
+\begin_layout Plain Layout
+
+    config          mp1service:GrpMessProject1Manager       rwx rwx ___
+\end_layout
+
+\begin_layout Plain Layout
+
+    dropbox         mp1service:GrpMessProject1Client        rwx _wx ___
+\end_layout
+
+\begin_layout Plain Layout
+
+    log             mp1service:GrpMessProject1Manager       rwx rwx ___
+\end_layout
+
+\begin_layout Plain Layout
+
+    review          mp1service:GrpMessProject1Manager       rwx rwx ___
+\end_layout
+
+\begin_layout Plain Layout
+
+    status          mp1service:GrpMessProject1Manager       rwx r_x ___
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Einrichten des cron-Jobs/Jenkins-Slave für Starten des Scripts
+\end_layout
+
+\begin_layout Standard
+Das MonVerifyTool-Skript wird regelmäßig ausgeführt, wobei die Frequenz
+ projektabhängig eingestellt werden kann.
+ Werden z.B.
+ täglich neue Messdaten erwartet, sollte das Skript ebenfalls täglich laufen
+ (häufiger wäre nicht sinnvoll).
+\end_layout
+
+\begin_layout Standard
+Das Script wird wie folgt aufgerufen:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+>python /path/to/scripts/MonVerifyTool.py /srv/data/MessProjekt1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Das Script sollte unter dem Nutzer 
+\family typewriter
+mp1service
+\family default
+ laufen (kann aber auch manuell von jedem Projektmanager ausgeführt werden).
+\end_layout
+
+\begin_layout Section
+Einrichten von Messerfassungs-Clients
+\end_layout
+
+\begin_layout Standard
+TODO: Stefan Vogelsang: Diesen Abschnitt überarbeiten und dokumentieren,
+ wie das mit der Key-Erstellung und Ablage funktioniert.
+ Vor allem die private/public Key Info!
+\end_layout
+
+\begin_layout Standard
+Es wird vorausgesetzt, dass der Admin-Nutzer einen private/public Key für
+ den Messclient-Nutzer eingerichtet hat.
+\end_layout
+
+\begin_layout Standard
+Das Kopieren der neuen Messdaten erfolgt via scp, beispielsweise der Datei
+ 
+\family typewriter
+wg1-rh4-2_2019-08-09_00:00:00.csv
+\family default
+ an einen Server unter der IP-Adresse 
+\family typewriter
+1.2.3.4
+\family default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\scriptsize\ttfamily\color{black}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> scp -i /path/to/id_rsa wg1-rh4-2_2019-08-09_00:00:00.csv mp1client@1.2.3.4:/srv/da
+ta/MessProject1/dropbox
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Das zusätzliche Argument 
+\family typewriter
+-i /path/to/id_rsa
+\family default
+ mit dem Pfad zur privaten Schlüsseldatei ist notwendig, da Mess-Client-Nutzer
+ kein Home-Verzeichnis haben und daher der Standard-Suchpfad 
+\family typewriter
+~/.ssh/id_rsa
+\family default
+ für die private Schlüsseldatei nicht gültig ist.
+ Dabei ist 
+\family typewriter
+/path/to/id_rsa
+\family default
+ mit einem Pfad zu einer ausschließlich vom Mess-Client-Nutzer lesbaren
+ private-Key-Datei zu ersetzen.
+\end_layout
+
+\begin_layout Section
+Projektkonfiguration
+\end_layout
+
+\begin_layout Standard
+Das MonVerifyTool-Skript führt verschiedenen Prüfungen durch.
+ Diese werden in den unterschiedlichen Konfigurationsdateien festgelegt.
+ Nachfolgend sind die einzelnen Konfigurationsdateien beschrieben und die
+ darin definierten Tests.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Expectation-Dateien-(*.exp)"
+
+\end_inset
+
+Projekt-Eingangsprüfungs-Konfiguration / Expectation-Dateien (*.exp)
+\end_layout
+
+\begin_layout Standard
+Ein Projekt hat exakt eine Konfigurationsdatei mit den Eingangs-Prüfungen.
+ Diese hat die Endung 
+\family typewriter
+exp
+\family default
+ (von 
+\emph on
+Expectations
+\emph default
+) und liegt im 
+\family typewriter
+config
+\family default
+-Unterverzeichnis.
+ In dieser Datei wird festgelegt, welche Mess-Dateien in diesem Projekt
+ erwartet werden.
+ Die Datei ist im JSON-Format geschrieben und hat beispielsweise folgenden
+ Inhalt:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+    "ExpectedFiles" : [
+\end_layout
+
+\begin_layout Plain Layout
+
+        ["p1.1/demo2_","IBK_TimeSeries",0,0,100,1,"p1.1/demo1.ref","p1.1/demo1.phy",1
+20,1],
+\end_layout
+
+\begin_layout Plain Layout
+
+        [...],
+\end_layout
+
+\begin_layout Plain Layout
+
+        ["p1.5/demo2_","IBK_TimeSeries",0,0,100,1,"p1.1/demo1.ref","p1.1/demo1.phy",1
+20,1]
+\end_layout
+
+\begin_layout Plain Layout
+
+    ],
+\end_layout
+
+\begin_layout Plain Layout
+
+    "BypassFiles" : [
+\end_layout
+
+\begin_layout Plain Layout
+
+        "TestHaus/ignored_"
+\end_layout
+
+\begin_layout Plain Layout
+
+    ]
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Erwartete Dateien
+\end_layout
+
+\begin_layout Standard
+Das Element 
+\family typewriter
+'ExpectedFiles'
+\family default
+ definiert in einer Liste alle Dateien, welche regelmäßig im Projekt erwartet
+ werden.
+ Jeder Eintrag der Liste ist selbst eine Liste mit den in Tabelle
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:expFileContent"
+
+\end_inset
+
+ definierten Elementen.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="3">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top" width="2cm">
+<column alignment="center" valignment="top" width="2.7cm">
+<column alignment="left" valignment="top" width="10.3cm">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+Spaltenindex
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+Typ
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+Beschreibung
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Dateipräfix
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Der Präfix des Dateinamens, d.h.
+ der komplette relative Pfad zum 
+\family typewriter
+dropbox
+\family default
+-Verzeichnis einschließlich des Dateinamens bis und inklusive des ersten
+ Unterstrichs.
+ Beispielsweise: 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+p1.1/demo2_
+\end_layout
+
+\end_inset
+
+ (siehe auch Abschnitt
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Namenskonventionen-für-Messdaten"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Pfade außerhalb des 
+\family typewriter
+dropbox
+\family default
+-Verzeichnisses sind nicht erlaubt.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Testgruppe
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Ein Bezeichner einer Testgruppe (siehe Tabelle
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Testgruppen-Matrix"
+
+\end_inset
+
+ für eine Übersicht der Zuordnung von Einzeltests zu Testgruppen).
+ Durch Angabe der Testgruppe können bestimmte Prüfungen ausgeschlossen werden.
+ Ist das Feld eine leere Zeichenkette (d.h.
+ 
+\family typewriter
+"")
+\family default
+, wird 
+\family typewriter
+'IBK_TimeSeries'
+\family default
+ angenommen.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Minimale Größe in Bytes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Die minimale bzw.
+ exakte Größe der erwarteten Datei in Bytes.
+ Ein Wert von Null deaktiviert den Größentest (die Unterscheidung zwischen
+ Größenbereichstest und Test auf exakte Dateigröße wird durch die Zuordnung
+ zu der Testgruppe festgelegt, siehe Tabelle
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Testgruppen-Matrix"
+
+\end_inset
+
+).
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Maximale Größe in Bytes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Die maximale Größe der erwarteten.
+ Ein Wert von Null deaktiviert den Test auf maximale Größe.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Zeilenzahl
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Die Anzahl der Daten-Zeilen, die in einer vollständigen Datei nominal erwartet
+ werden.
+ Ein Wert von 0 deaktiviert den Zeilenzahltest.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Zeilenzahltoleranz
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Die maximal erlaubte Abweichung (nach unten oder oben) beim Test auf Zeilenzahl.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Kopfzeilenreferenz-Datei
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Ein Pfad (relativ zum 
+\family typewriter
+config
+\family default
+-Verzeichnis) zu einer Datei mit den Kopfzeilen der erwarteten Datei.
+ Beispielsweise: 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+p1.1/demo1.ref
+\end_layout
+
+\end_inset
+
+.
+ Pfade außerhalb des 
+\family typewriter
+config
+\family default
+-Verzeichnisses sind nicht erlaubt.
+ Üblicherweise wird diese Datei erstellt, indem man die erste generierte
+ Messdaten-Datei kopiert, alle Datenzeilen entfernt und als 
+\family typewriter
+.ref
+\family default
+-Datei abspeichert.
+\end_layout
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Eine fehlende Pfadangabe (d.h.
+ leere Zeichenkette 
+\family typewriter
+"")
+\family default
+ deaktiviert den Kopfzeilen-Vergleichstest.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Datei für Inhaltsprüfungen
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Ein Pfad (relativ zum 
+\family typewriter
+config
+\family default
+-Verzeichnis) zu einer Datei mit Definitionen der inhaltlichen Prüfungen.
+ Beispielsweise: 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+p1.1/demo1.phy
+\end_layout
+
+\end_inset
+
+.
+ Pfade außerhalb des 
+\family typewriter
+config
+\family default
+-Verzeichnisses sind nicht erlaubt.
+\end_layout
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Eine fehlende Pfadangabe (d.h.
+ leere Zeichenkette 
+\family typewriter
+"")
+\family default
+ deaktiviert die inhaltlichen Werteprüfungen.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Mess-Interval
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Erwartete Messfrequenz in Sekunden.
+ Wenn dieser Wert nicht 0 ist, werden die Zeitstempel aller Datenzeilen
+ daraufhin überprüft, ob die erwartete Messfrequenz eingehalten wurden.
+\end_layout
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\emph on
+Achtung: Der zeitliche Abstand zwischen dem letzten Zeitstempel der zuletzt
+ archivierten Datei und dem ersten Zeitstempel der aktuell geprüften Datei
+ kann an dieser Stelle nicht überprüft werden.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Mess-Interval-Toleranz
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Toleranz (+/-) für Messfrequenz in Sekunden.
+ Wenn dieser Wert nicht 0 ist, muss die Länge jedes Messintervalls im Toleranzbe
+reich liegen (Min: Mess-Interval - Toleranz; Max: Mess-Interval + Toleranz).
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Konfigurationseinträge für jede Datei im 
+\family typewriter
+'ExpectedFiles'
+\family default
+ Attribut.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:expFileContent"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Bypass-Dateien
+\end_layout
+
+\begin_layout Standard
+Liefert ein Mess-Client Daten in anderen Dateiformaten ab, oder zusätzliche
+ Dateien mit Metainformationen, so kann man diese vom Skript direkt in das
+ bypass-Verzeichnis verschieben lassen, ohne die Eingangsprüfungen durchzuführen.
+ Dazu muss in der 
+\family typewriter
+exp
+\family default
+-Datei das Element 
+\family typewriter
+'BypassFiles'
+\family default
+ definiert werden.
+ Dieses Element ist eine Liste von Datei-Suchmasken.
+ Die Dateinamen oder Pfade werden als relative Pfade zum 
+\family typewriter
+dropbox
+\family default
+-Verzeichnis interpretiert.
+ Jede neue Datei, welche dem Suchmuster entpricht, wird unter Beibehaltung
+ der Verzeichnisstruktur im 
+\family typewriter
+dropbox
+\family default
+-Verzeichnis in das 
+\family typewriter
+bypass
+\family default
+-Verzeichnis verschoben.
+\end_layout
+
+\begin_layout Standard
+Eine Datei gilt als korrekt erkannt, wenn die der Dateipfad mit einem der
+ definierten Suchmuster 
+\emph on
+beginnt
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+Beispielsweise wird die Datei:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+dropbox/TestHaus/wp2_2019-08-09_extra_daten.csv
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+durch die Suchmaske
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+TestHaus/wp2
+\end_layout
+
+\end_inset
+
+ gefunden und in das Verzeichnis
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+bypass/TestHaus/wp2_2019-08-09_extra_daten.csv
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+verschoben.
+\end_layout
+
+\begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Prüfungen"
+
+\end_inset
+
+Prüfungen
+\end_layout
+
+\begin_layout Subsection
+Daten-Eingangsprüfungen
+\end_layout
+
+\begin_layout Standard
+Jede neue Mess-Datei wird vom Skript entsprechend der Datei-Konfiguration
+ überprüft.
+ Wird ein Fehler festgestellt, wird die geprüfte Datei in das 
+\family typewriter
+review
+\family default
+-Verzeichnis verschoben und ein Log-Eintrag geschrieben.
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Testgruppen"
+
+\end_inset
+
+Grundlegende Vorgehensweise
+\end_layout
+
+\begin_layout Enumerate
+Es wird geprüft, ob die Datei durch eine Suchmaske in der 
+\family typewriter
+'BypassFiles'
+\family default
+-Liste gefunden wird.
+ Falls ja, wird die Datei in das 
+\family typewriter
+bypass
+\family default
+-Verzeichnis verschoben.
+\end_layout
+
+\begin_layout Enumerate
+Es wird geprüft, ob der Dateiname der Datei dem definierten Schema entspricht.
+ Falls nicht, wird die Datei in das 
+\family typewriter
+review
+\family default
+-Verzeichnis verschoben und als 
+\begin_inset Quotes gld
+\end_inset
+
+BadFilename
+\begin_inset Quotes grd
+\end_inset
+
+ klassifiziert (siehe Tabelle
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Tests-und-Logeintraege"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Enumerate
+Es wird geprüft, ob für die Datei ein passender Eintrag in der 
+\family typewriter
+'ExpectedFiles'
+\family default
+-Liste gefunden wird.
+ Falls nicht, wird die Datei in das 
+\family typewriter
+review
+\family default
+-Verzeichnis verschoben und als 
+\begin_inset Quotes gld
+\end_inset
+
+NotExpected
+\begin_inset Quotes grd
+\end_inset
+
+ klassifiziert (siehe Tabelle
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Tests-und-Logeintraege"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Enumerate
+Je nach Testgruppe (aus der ExpectedFiles-Definition) werden nun die für
+ diese Gruppe gültigen Tests durchgeführt (siehe Tabelle
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Testgruppen-Matrix"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="6">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+Testgruppe
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rotate="90" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+Kopfzeilen korrekt
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rotate="90" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+Dateigröße stimmt exakt
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rotate="90" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+Dateigröße im Toleranzbereich
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rotate="90" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+Anzahl Datenzeilen wie erwartet
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rotate="90" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+Mess-Interval eingehalten
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+IBK_Mon_DHT22
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+IBK_Mon_1Wire
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+IBK_Mon_WinStat
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+IBK_Mon_ConCom
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+IBK_TimeSeries
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+IBK_EventData
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+x
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+IBK_Custom
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Testgruppen
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Testgruppen-Matrix"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Bei allen folgenden Tests wird im Fehlerfall die Datei in das 
+\family typewriter
+review
+\family default
+-Verzeichnis verschoben und entsprechend klassifiziert (siehe Tabelle
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Tests-und-Logeintraege"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsubsection
+Eingangstests
+\end_layout
+
+\begin_layout Description
+Dateinamenstest Bei diesem Test wird zunächst geprüft, ob der Dateiname
+ dem geforderten Schema entspricht (einschließlich Format des Datums/Zeitstempel
+s).
+ Danach wird geprüft, ob die Uhrzeit 00:00:00 ist, was derzeit die erwartete
+ Erstellungszeit der Datendatei ist.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\emph on
+Hinweis: Sollten Datendateien in anderen Zeitfrequenzen erstellt werden,
+ beispielsweise alle 12 Stunden, muss das Skript hinsichtlich dieses Tests
+ erweitert werden.
+\end_layout
+
+\begin_layout Description
+Kopfzeilentest Bei diesem Test wird geprüft, ob die Kopfzeilen der zu prüfenden
+ Datei 
+\emph on
+exakt
+\emph default
+ mit den in der 
+\family typewriter
+ref
+\family default
+-Datei hinterlegten Kopfzeilen übereinstimmen.
+ Ist keine 
+\family typewriter
+ref
+\family default
+-Datei angegeben, wird dieser Test übersprungen.
+\end_layout
+
+\begin_layout Description
+Dateigrößentest Die angegebene Dateigröße muss je nach Testgruppe entweder
+ exakt stimmen, oder zumindest im erwarteten Toleranzband liegen, d.h.
+ 
+\emph on
+Größe - Toleranz < Dateigröße < Größe + Toleranz
+\emph default
+.
+ Ist keine Größe angegeben oder = 0 wird der Test übersprungen.
+\end_layout
+
+\begin_layout Description
+Datenzeilentest Die Anzahl der Datenzeilen in der Datei wird mit der erwarteten
+ Datenzeilenanzahl (einschließlich Toleranz) verglichen.
+ Ist keine Zeilenzahl definiert oder = 0 wird der Test übersprungen.
+\end_layout
+
+\begin_layout Description
+Mess-Intervalltest Die Zeit zwischen jeweils aufeinanderfolgenden Datensamples
+ wird mit dem definierten Mess-Interval verglichen.
+ Sofern ein Mess-Interval angegeben wurde und nicht 0 ist, müssen die Messabstän
+de 
+\emph on
+exakt
+\emph default
+ mit dem erwarteten Mess-Interval übereinstimmen.
+ Im Fehlerfall wird in der Logdatei für jedes unstimmige Intervall der vorangega
+nge und nachfolgende Zeitstempel angegeben.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="13" columns="3">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="left" valignment="top" width="9cm">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+Test
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+Log-Klassifizierung
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+Mögliche Fehlersituation
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Dateiname
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+BadFilename
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Dateiname entspricht nicht dem definierten Schema.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Dateiname
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+BadFilename
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Zeitstempel der erwarteten Datei entspricht nicht dem erwarteten Zeitpunkt
+ (aktuell wird Uhrzeit 00:00:00 erwartet) .
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Datei erwartet
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+NotExpected
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Für diese Datei gibt es keine Definition in der 
+\family typewriter
+'ExpectedFiles'
+\family default
+-Liste des Projekts.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Zugriffsfehler (Lesen)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+AccessDenied
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Kann die Datei im 
+\family typewriter
+dropbox
+\family default
+-Verzeichnis nicht lesen.
+ Zugriffsrechte fehlen.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Schreibfehler
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+AccessDenied
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Kann die Datei im 
+\family typewriter
+dropbox
+\family default
+-Verzeichnis nicht in ein anderes Verzeichnis verschieben.
+ Zugriffsrechte fehlen.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Dateigröße
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+EmptyFile
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Datei ist leer.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Dateigröße
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+FileSizeMismatch
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Dateigröße stimmt nicht exakt, bzw.
+ liegt außerhalb des Toleranzbereichs.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Kopfzeile
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+InvalidHeader
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Kopfzeilen der Datei stimmen nicht mit der Referenz-Kopfzeilen-Datei überein.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Datenzeilen
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+SampleCountMismatch
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Anzahl der Datenzeilen ist außerhalb des erwarteten Bereichs.
+ Wird auch verwendet, wenn die Datei komplett ohne Datensamples ist (nur
+ Header).
+ Wird auch ausgelöst, wenn die Trennzeile zwischen Kopf- und Datensektion
+ fehlt, und die Kopfzeilenprüfung nicht durchgeführt wurde.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Datenzeilen
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+ColumnCountMismatch
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Anzahl der Spalten in einer Datenzeile entspricht nicht der durch die SensorID-K
+opfzeile vorgegebenen Spaltenzahl.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Datenzeilen
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+InvalidTimeStamp
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Das Format des Zeitstempels eines Datensamples stimmt nicht.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+[0.4
+\backslash
+normalbaselineskip]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Mess-Intervall
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+InvalidSamplingInterval
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Der Abstand zwischen zwei Datensamples/Zeitstempeln entspricht nicht dem
+ erwarteten Mess-Intervall.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Tests-und-Logeintraege"
+
+\end_inset
+
+Tests und entsprechende Logeinträge.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Vollständigkeitsprüfungen"
+
+\end_inset
+
+Vollständigkeitsprüfungen
+\end_layout
+
+\begin_layout Standard
+Das Skript erwartet täglich neue Datendateien, wie in der 
+\family typewriter
+exp
+\family default
+-Datei festgelegt wurde.
+ D.h., bei korrekter Funktion müssen nach Ablauf des Skripts im 
+\family typewriter
+archive
+\family default
+-Verzeichnis alle Dateien mit Zeitstempel bis zum heutigen Tag liegen (d.h.
+ MonVerifyTool-Skript sollte daher stets 
+\emph on
+nach 
+\emph default
+dem Empfangen neuer Daten gestartet werden).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename checkForMissingFiles.pdf
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Programmablaufdiagramm-für-checkForMissingFiles"
+
+\end_inset
+
+Programmablaufdiagramm für die 
+\begin_inset Quotes gld
+\end_inset
+
+Fehlende Dateien
+\begin_inset Quotes grd
+\end_inset
+
+-Prüfung
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Für jede in der 
+\family typewriter
+exp
+\family default
+-Datei aufgeführte erwartete Datei (siehe Abschnitt
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Expectation-Dateien-(*.exp)"
+
+\end_inset
+
+) wird eine Verzeichnisliste aus dem Inhalt des 
+\family typewriter
+archive
+\family default
+-Verzeichnisses gelesen und alle Zeitstempel extrahiert (siehe Ablaufdiagramm
+ in Abbildung
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Programmablaufdiagramm-für-checkForMissingFiles"
+
+\end_inset
+
+).
+ Dann wird vom ältesten Zeitstempel bis zum aktuellen Datum jeder Tageszeitstemp
+el auf Existenz geprüft.
+ Fehlt ein Zeitstempel, so wird die entsprechende Datei in die log-Datei
+ Der Umgang mit Encoding-Problemen ist zu diskutieren.
+ Hier findet entweder die Anzahl der Kopfzeilen aus der exp Datei Anwendung
+ oder die Anzahl der Headerzeilen muss ausgezählt werden.
+ 
+\family typewriter
+log/missing
+\family default
+ eingetragen.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Beispiel
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+archive/WsIBK_2019-09-15_00-00-00.csv
+\end_layout
+
+\begin_layout Plain Layout
+
+archive/WsIBK_2019-09-13_00-00-00.csv
+\end_layout
+
+\begin_layout Plain Layout
+
+archive/WsIBK_2019-09-12_00-00-00.csv
+\end_layout
+
+\begin_layout Plain Layout
+
+archive/WsIBK_2019-09-11_00-00-00.csv
+\end_layout
+
+\begin_layout Plain Layout
+
+archive/T2s/T2IBK_2019-09-15_00-00-00.csv
+\end_layout
+
+\begin_layout Plain Layout
+
+archive/T2s/T2IBK_2019-09-14_00-00-00.csv
+\end_layout
+
+\begin_layout Plain Layout
+
+archive/T2s/T2IBK_2019-09-12_00-00-00.csv
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Die Datei 
+\family typewriter
+log/missing 
+\family default
+würde nun folgende Zeilen enthalten:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+WsIBK_2019-09-14_00-00-00.csv
+\end_layout
+
+\begin_layout Plain Layout
+
+T2s/T2IBK_2019-09-13_00-00-00.csv
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Die Dateien mit Präfix 
+\family typewriter
+T2s/T2IBK
+\family default
+ beginnen erst am 2019-09-12, weswegen die Datei 
+\family typewriter
+T2s/T2IBK_2019-09-11_00-00-00.csv
+\family default
+ nicht als fehlend aufgeführt wird (obwohl die Datenreihe mit Präfix 
+\family typewriter
+WsIBK
+\family default
+ bereits 2019-09-11 beginnt).
+\end_layout
+
+\begin_layout Standard
+Sind alle erwarteten Dateien vorhanden, so wird die Datei 
+\family typewriter
+log/missing
+\family default
+ gelöscht.
+ Die Existenz der 
+\family typewriter
+log/missing
+\family default
+-Datei mit eingetragenen Fehldateien führt zu einem Rückgabewert von 1 des
+ MonVerifyTool-Skripts.
+\end_layout
+
+\begin_layout Subsection
+Inhaltliche Prüfungen
+\end_layout
+
+\begin_layout Standard
+Die Prüfung auf inhaltliche Fehler führt, wenn Fehler gefunden werden, zu
+ einem Eintrag des Fehlers ins die Fehlerdokumentationsdatei.
+ Die Fehlerdokumentationsdatei dokumentiert damit alle Fehler und ggf.
+ Korrekturstellen für spätere Analyseschritte der Daten.
+ Ist ein Fehler korrigierbar wird eine Kopie der Daten/untersuchten Datei
+ erstellt und alle semiautomatisch behandelbaren Fehler werden in dieser
+ Kopie korrigiert.
+\end_layout
+
+\begin_layout Subsubsection
+Erkennbare Fehlertypen
+\end_layout
+
+\begin_layout Standard
+Folgende inhaltlichen Fehler lassen sich erkennen:
+\end_layout
+
+\begin_layout Enumerate
+Einzelsensorausfall
+\end_layout
+
+\begin_layout Enumerate
+Sensormodulausfall
+\end_layout
+
+\begin_layout Enumerate
+Einzelner Zeitschrittausfall
+\end_layout
+
+\begin_layout Enumerate
+Periodenausfall
+\end_layout
+
+\begin_layout Enumerate
+Mehrfache Dateien für einen Übertragungszeitraum
+\end_layout
+
+\begin_layout Enumerate
+Sensorbereich / Sensorspezifischer Fehlerwert
+\end_layout
+
+\begin_layout Standard
+Der einfachste Fehlerfall bezeichnet einen einzelnen Sensor in einer Datenzeile
+ der keine Daten mehr liefert.
+ Der Wert entfällt bzw.
+ entspricht dann einem Fehlerwert.
+ Alle Modulbezeichner sind in diesem Fall noch vorhanden.
+ Im zweiten Fall fällt die Komplette Gruppe von Sensoren und deren zugeordnete
+ Sensorknotenbezeichnung aus.
+ In diesem Fall fehlt eine vollständige Zeile inklusive Zeitstempel im Datenbloc
+k.
+ Dehnt sich dieses Ereignis über längere Zeit aus, es fehlt mehr als ein
+ kompleter Zeitschritt in Folge, ist die Definition des Falles 4 erreicht.
+ Durch wiederholten Stromausfall kann es zum mehrfachen anlegen einer Messdatei
+ am selben Übertragungstag kommen.
+ Diesen Fehler bezeichnet die Position 5.
+ Fügt man alle n Dateien zu einer Einzigen zusammen entsteht eine Datei
+ mit wahrscheinlich mindestens n-1 Fehlern des Types 4.
+ Das Zusammenfügen der mehrfachen Dateien am Ende des Übertragungszeitraumes
+ sollte immer erfolgen, aber nur unter der Vorraussetzung das sich der Header
+ all dieser Dateien unifizieren lassen.
+ 
+\end_layout
+
+\begin_layout Standard
+Im folgenden Beispiel fehlt der Zeitschritt 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+2015-11-10 00:10:00
+\end_layout
+
+\end_inset
+
+ da der Zeitschritt mit 5 Minuten angegeben ist.
+ Im Zeitschritt 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+2015-11-10 00:25:00
+\end_layout
+
+\end_inset
+
+ fehlt ein einzelner Sensorwert, im darauf folgenden Schritt mehrere einzelne
+ Sensoren an verschiedenen Sensorknoten.
+ Der Zeitschritt 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+2015-11-10 00:40:00
+\end_layout
+
+\end_inset
+
+ zeigt den kompletten Ausfall des Knotens Rasp01_SerAhl_G02 bzw.
+ eine Unterbrochene Kommunikation zu diesem Knoten.
+ Der nächsten Zeitschritt zeigt den kompleten Ausfall der seriellen Kommunikatio
+n zu den Ahlbornknoten.
+ Eine Variation des letzten Fehlers zeigt sich im Zeitschritt 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+2015-11-10 00:55:00
+\end_layout
+
+\end_inset
+
+, ein zusätzlicher Knoten der nicht im Header definiert wurde tritt auf.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\lang british
+\begin_inset listings
+lstparams "caption={Example of a Missing Time Stamp},frame={bottomline},framexbottommargin={4pt},framexleftmargin={17pt},framexrightmargin={5pt},label={list:Example-missing-one-time-stamp},xleftmargin={17pt}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Channel,Rasp01_SerAhl_G01,M00,M10,Rasp01_SerAhl_G02,M01,,,M11
+\end_layout
+
+\begin_layout Plain Layout
+
+SensorID,Rasp01_SerAhl_G01,H2W3_AK_T,H2W3_AK_RH,Rasp01_SerAhl_G02,H2W3_MW_T,,,H2
+W3_MW_RH
+\end_layout
+
+\begin_layout Plain Layout
+
+Unit,Rasp01_SerAhl_G01,K,%,Rasp01_SerAhl_G02,C,,,%
+\end_layout
+
+\begin_layout Plain Layout
+
+Quantity,Rasp01_SerAhl_G01,T,rH,Rasp01_SerAhl_G02,T,,,rH
+\end_layout
+
+\begin_layout Plain Layout
+
+GW-Max,Rasp01_SerAhl_G01,,,Rasp01_SerAhl_G02,,,,
+\end_layout
+
+\begin_layout Plain Layout
+
+GW-Min,Rasp01_SerAhl_G01,,,Rasp01_SerAhl_G02,,,,
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+2015-11-10 00:00:00,Rasp01_SerAhl_G01,273.15,97.8,Rasp01_SerAhl_G02,-11.5,,,45.49
+\end_layout
+
+\begin_layout Plain Layout
+
+2015-11-10 00:05:00,Rasp01_SerAhl_G01,274.55,94.1,Rasp01_SerAhl_G02,-12.5,,,44.9
+\end_layout
+
+\begin_layout Plain Layout
+
+2015-11-10 00:15:00,Rasp01_SerAhl_G01,275.15,94.1,Rasp01_SerAhl_G02,-13.5,,,52.63
+\end_layout
+
+\begin_layout Plain Layout
+
+2015-11-10 00:20:00,Rasp01_SerAhl_G01,276.15,93.1,Rasp01_SerAhl_G02,-13.5,,,54.79
+\end_layout
+
+\begin_layout Plain Layout
+
+2015-11-10 00:25:00,Rasp01_SerAhl_G01,275.15,94.1,Rasp01_SerAhl_G02,,,,5.49
+\end_layout
+
+\begin_layout Plain Layout
+
+2015-11-10 00:30:00,Rasp01_SerAhl_G01,275.15,,Rasp01_SerAhl_G02,,,,5.49
+\end_layout
+
+\begin_layout Plain Layout
+
+2015-11-10 00:35:00,Rasp01_SerAhl_G01,273.15,97.8,Rasp01_SerAhl_G02,-11.5,,,45.49
+\end_layout
+
+\begin_layout Plain Layout
+
+2015-11-10 00:40:00,Rasp01_SerAhl_G02,-11.5,,,5.49
+\end_layout
+
+\begin_layout Plain Layout
+
+2015-11-10 00:45:00
+\end_layout
+
+\begin_layout Plain Layout
+
+2015-11-10 00:50:00,Rasp01_SerAhl_G01,273.15,97.8,Rasp01_SerAhl_G02,-11.5,,,45.49
+\end_layout
+
+\begin_layout Plain Layout
+
+2015-11-10 00:55:00,Rasp01_SerAhl_G01,273.15,97.8,Rasp01_SerAhl_G02,-11.5,,,45.49,Ra
+sp01_SerAhl_G03,-11.5,,,45.49
+\end_layout
+
+\begin_layout Plain Layout
+
+2015-11-10 01:00:00,Rasp01_SerAhl_G01,273.15,97.8,Rasp01_SerAhl_G02,-11.5,,,45.49
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Jeder diese Fehler kann über eine längere Zeitspanne auftreten.
+ Solche Perioden sind dann am Stück zu erkennen und entsprechend in der
+ Fehlerdokumention zu hinterlegt.
+ Einige Sensoren geben im defekt einen Fehlercode anstelle des Messwertes
+ aus.
+ Die Tabelle 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:SensorFailureCodes"
+
+\end_inset
+
+ zeigt die aktuell unterstützten Fehlercodes.
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="2cm">
+<column alignment="center" valignment="top" width="2.5cm">
+<column alignment="left" valignment="top" width="11.5cm">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+#Fehler
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sensortyp
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Beschreibung
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Quotes gld
+\end_inset
+
+-
+\begin_inset Quotes grd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ahlborn
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sensor nicht gefunden oder wert außerhalb des Bereiches von GW-Min und GW-Max.
+ Siehe Header informationen.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Quotes gld
+\end_inset
+
+125
+\begin_inset Quotes grd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+NTC FN 0001K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ein Temperatursensor, mit dem maximum von 100°C, ist defekt.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Bekannte Fehlerkodes.
+\lang british
+
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:SensorFailureCodes"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Darüber hinaus gibt es für eine Liste von Ahlborn-Sensoren gültige Wertebereiche
+ in denen der Sensor einen Wert ausgibt.
+ Wird dieser Bereich verlassen liegt ein Fehler vor.
+ Die folgende Tabelle spiegelt die gültigen Wertebereiche für diese Sensoren
+ wieder.
+ 
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="80" columns="3">
+<features islongtable="true" longtabularalignment="center">
+<column alignment="center" valignment="top" width="4.5cm">
+<column alignment="center" valignment="top" width="4cm">
+<column alignment="center" valignment="top" width="2.5cm">
+<row endhead="true">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sensor
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Range
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Verbinder
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pt100-1 4Ltr.
+ ITS 90 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-200..850°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pt100-2 4Ltr.
+ ITS 90
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-200..400°C/300°C*$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pt100-3 4Ltr.
+ ITS 90
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-8..65.000°C*$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pt1000-1 4Ltr.
+ mit Elementflag 1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-200..850°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pt1000-2 4Ltr.
+ mit Elementflag 1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-200..400°C/300°C*$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ni100 4Ltr.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-60..240°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ni1000 4Ltr.
+ mit Elementflag 1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-60..240°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+NiCr-Ni (K) ITS 90
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-200..1370°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9020-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+NiCrSil-NiSil (N) ITS 90
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-200..1300°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9020-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Fe-CuNi (L)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-200..900°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9021-FSL
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Fe-CuNi (J) ITS 90
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-200..1000°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9021-FSJ
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cu-CuNi (U)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-200..600°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cu-CuNi (T) ITS 90
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-200..400°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9021-FST
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PtRh10-Pt (S) ITS 90
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..1760°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PtRh13-Pt (R) ITS 90
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..1760°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PtRh30-PtRh6 (B) ITS 90
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $+400..1800°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+AuFe-Cr
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-270..60°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ntc Typ N
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-50..125°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Millivolt
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-10..55mV$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Millivolt 1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-26..26mV$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Millivolt 2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-260..260mV$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Volt
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-2.6..2.6V$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Differenz-Millivolt
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-10..55mV$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Differenz-Millivolt 1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-26..26mV$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Differenz-Millivolt 2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-260..260mV$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Differenz-Volt
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-2.6..2.6V/-2.0..2.6V*$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Milliampere
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-32..32mA/-26..26mA*$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9601-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Prozent
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4-20mA[\%]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9601-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Batterie
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..25V$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ohm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..500\Omega$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ohm mit Elementflag 1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..5000\Omega$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Frequenz
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..15000\textit{ [Hz]}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9909-AK
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Impulse
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..65000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9909-AK
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Digitale Schnittstelle
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-65000..+65000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9919-AKx
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Digitaleingang
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..100\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-EK2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Flügelrad Normal
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.3..20m/s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9915-AK
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Flügelrad Normal
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.4..40m/s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9915-AK
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Flügelrad Mikro
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.5..20m/s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9915-AK
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Flügelrad Mikro
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.6..40m/s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9915-AK
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Flügelrad Makro
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.1..20m/s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9915-AK
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Wasserturbine Mikro
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0...5m/s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9915-AK
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Staudruck 40 m/s TK, LK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.5..40m/s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9612-AK
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Staudruck 90 m/s TK, LK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..90m/s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9612-AK
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Rel.
+ Feuchte kap.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..100\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Rel.
+ Feuchte kap.
+ m.
+ TK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..100\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FH A646-C
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Rel.
+ Feuchte kap.
+ m.
+ TK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..100\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FH A646-R
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Feuchttemperatur
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-30..125°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FN A846
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Leitfähigkeit m.
+ TK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..20mS$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FY A641-LF
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+CO2-Konzentration
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..2.5\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FY A600-C02
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+O2-Sättigung m.
+ TK u.
+ LK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..260\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FY A640-O2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+O2-Konzentration m.
+ TK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..40mg/l$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FY A640-O2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Temperatur digital intern*
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-20..+80°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FH 0D46
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Rel.
+ Feuchte digital intern*
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..100\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FH 0D46
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Abs.
+ Feuchte kap.
+ m.
+ LK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..500g/kg$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FH A646
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Taupunkt kap.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-25..100°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FH A646
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dampfdruck kap.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..1050mbar$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FH A646
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Enthalpie kap.
+ m.
+ LK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..400kJ/kg$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FH A646
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Rel.
+ Feuchte psychr.
+ m.LK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..100\%$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FN A846
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Abs.
+ Feuchte psychr.
+ m.LK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..500g/kg$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FN A846
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Taupunkt psychr.
+ m.
+ LK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-25..100°C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FN A846
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dampfdruck psychr.
+ m.
+ LK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..1050mbar$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FN A846
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Enthalpie psychr.
+ m.
+ LK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..400kJ/kg$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+FN A846
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Differenz
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(Mb1-Mb2)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+arbitrary
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Maximalwert
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(Mb1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+arbitrary
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Minimalwert
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(Mb1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+arbitrary
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Mittelwert über Zeit M(t)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(Mb1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+arbitrary
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Mittelwert über Messst.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(Mb2..Mb1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+arbitrary
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Summe über Messst.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(Mb2..Mb1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+arbitrary
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Gesamtpulszahl
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(Mb1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9909-AK2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pulszahl/Druckzyklus
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(Mb1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9909-AK2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Wärmekoeffizient *
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $M(q)/M(M01-M00)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Wet-Bulb-Globe-Temp.
+ *
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0.1TT+0.7HT+0.2GT$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZA 9000-FS
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Alarmvalue
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(Mb1)$
+\end_inset
+
+ [%]
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+arbitrary
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Measuredvalue*
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(Mb1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+arbitrary
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Vergleichsstellentemperatur*
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+arbitrary
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Anzahl gemittelter Werte*
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(Mb1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+arbitrary
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Volumenstrom m3/h*
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $M(Mb1)*Q$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+arbitrary
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Timer*
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0..60000/6000.0s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+arbitrary
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Luftdruck (Option AP) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $300..1100mb$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+arbitrary
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Für eventbasierte Daten ist die Fehlererkennung durch die Frequenz der Daten
+ gegeben.
+ Dabei ist die jeweilige Anwendung prägend für die Fehlererkennung.
+ Wird zum Beispiel das Öffnen und Schließen eines Fensters oder einer Tür
+ überwacht sind hohe Frequenzen im Bereich von Sekunden (<4s) unwahrscheinlich.
+ Diese deuten entweder auf ein durch Wind erzeugtes Schlagen des Fensters
+ oder der Tür oder auf einen Sensorausfall hin.
+ 
+\end_layout
+
+\begin_layout Standard
+Sowohl der Anwendungsfall als auch die Reihefolge der Events ist bei der
+ Interpretation eines Fehlers entscheidend.
+ Eine zeitliche Sequenz der Zustände (1 - 0 - 1) Offen - Geschlossen, kann
+ korrekt wenn das Fenster von der gekippten Position in die vollständig
+ geöffnete Position überführt wird.
+ Im Gegensatz kann die Sequenz Geschlossen - Offen - Geschlossen als zu
+ ignorierender Fehler angesehen werden.
+ Für eine Tür kann die Interpretation der gleichen Sequenz völlig anders
+ aussehen.
+ Beispiel:
+\end_layout
+
+\begin_layout Standard
+
+\lang british
+\begin_inset listings
+lstparams "caption={Example for an Event Driven Measurement},frame={bottomline},framexbottommargin={4pt},framexleftmargin={17pt},framexrightmargin={5pt},label={list:Header-Example-Event},xleftmargin={17pt}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+Channel,sw-18-we-2-04-winstat,0,1,2,3
+\end_layout
+
+\begin_layout Plain Layout
+
+SensorID,sw-18-we-2-04-winstat,R_18_2.41_W,R_18_2.42_W,R_18_2.43_W,R_18_2.44_W
+\end_layout
+
+\begin_layout Plain Layout
+
+Unit,sw-18-we-2-04-winstat,-,-,-,-
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+2017-10-14 06:51:40,sw-18-we-2-04-winstat,0.0,0.0,1.0,1.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+2017-10-14 06:57:50,sw-18-we-2-04-winstat,0.0,0.0,0.0,1.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+2017-10-14 07:43:52,sw-18-we-2-04-winstat,0.0,0.0,0.0,0.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+2017-10-14 08:29:46,sw-18-we-2-04-winstat,0.0,0.0,1.0,0.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+2017-10-14 08:31:00,sw-18-we-2-04-winstat,0.0,0.0,1.0,1.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+2017-10-14 08:55:34,sw-18-we-2-04-winstat,1.0,0.0,1.0,1.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+2017-10-14 08:56:33,sw-18-we-2-04-winstat,1.0,0.0,0.0,1.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+2017-10-14 08:59:46,sw-18-we-2-04-winstat,0.0,0.0,0.0,1.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+2017-10-14 09:13:17,sw-18-we-2-04-winstat,0.0,0.0,1.0,1.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+2017-10-14 10:09:11,sw-18-we-2-04-winstat,0.0,0.0,1.0,0.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+2017-10-14 10:10:26,sw-18-we-2-04-winstat,0.0,0.0,0.0,0.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+2017-10-14 10:14:24,sw-18-we-2-04-winstat,0.0,0.0,1.0,0.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+2017-10-14 10:14:28,sw-18-we-2-04-winstat,0.0,0.0,0.0,0.0 
+\end_layout
+
+\begin_layout Plain Layout
+
+2017-10-14 10:20:38,sw-18-we-2-04-winstat,1.0,0.0,0.0,0.0 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Der Filter zur Erkennung eines solchen Fehlers kann daher nicht generell
+ in Abhänigkeit des Dateitypen gewählt werden.
+ Daher ist es möglich den Filter durch die Parametrierung abzuschalten.
+ Die Parameter des Filters umfassen die Größe des Zeitfensters in denen
+ eine Sequenz ausgewertet werden soll in Sekunden.
+ Die Reihenfolge von Events als Definition der Zustände als Realzahlen (mindeste
+ns 0.0, 1.0) und die Häufigkeit mit der diese Sequenz auftreten darf ohne
+ als Fehler gemeldet zu werden (1/s).
+\end_layout
+
+\begin_layout Subsubsection
+Berechnung der Fehlerstatistik für ein Messprojekt
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+TODO : Stefan, überarbeiten (deutsch!) und prüfen, ob das mit der implementierte
+n Funktionalität übereinstimmt!
+\end_layout
+
+\begin_layout Standard
+Die Auswertung von Fehlern und Fehlerhäufigkeiten während eines Messprojektes
+ ist für den Messprojektadministrator und gibt Auskunft über die Qualität
+ eines erfassten Datensatzes.
+ Für jede Expectation-Datei wird eine Fehlerstatistik mit dem gleichen Dateiname
+n und der Dateiendung .stat erstellt.
+\end_layout
+
+\begin_layout Standard
+Globale Fehlerstatistikwerte die dem gesamten Datensatz zugeordnet werden:
+\end_layout
+
+\begin_layout Standard
+Die log Datei ist UTF8 encodiert und beinhaltet eine JSON Struktur.
+ Für Messdateien mit konstanten Messfrequenzen werden folgende Keywörter
+ in der Statistikdatei erfasst und kontinuierlich neu berechnet Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:HeaderColumnsLogFile"
+
+\end_inset
+
+.
+\lang british
+
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="2.5cm">
+<column alignment="left" valignment="top" width="11.5cm">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+JSON-Keyword
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Beschreibung
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+IncidentType
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Eindeutige ID für Fehler.
+ Die Liste aller Fehler ist in Tabelle xx definiert.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Location
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Liste der eineindeutigen IDs der betroffenen Messeinheiten, und der betroffenen
+ Sensoren z.B.
+ [Rasp01_SerAhl_G01,H2W3_AK_RH,Rasp01_SerAhl_G02,H2W3_MW_T].
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+NbrOfSensors
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Anzahl der betroffenen Sensoren die von einem Fehler affected by an error
+ incident.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SumOfBreak DownIncidents
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+This is calculated as: 
+\begin_inset Formula $\textit{time_{\textit{incident}}}*\textit{Nbr}_{\textit{Sensors}}*\textit{Frequency}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Auto
+\end_layout
+
+\begin_layout Plain Layout
+Correction
+\end_layout
+
+\begin_layout Plain Layout
+Actions
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+This counts all autocorrections applied to a dataset.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Correction
+\end_layout
+
+\begin_layout Plain Layout
+Actions
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+This column documents measures of corrections that might be suggested by
+ the software and later on executed by the project administrator.
+ All correction options are documented in following Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Format-Fehlerdokumentations-/"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+RateOfFailure
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+This rate is calculated as: 
+\begin_inset Formula $\frac{\textit{MaxNbr}_{\textit{Samples}}}{100}\textit{Nbr}_{\textit{Incidents}}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\lang british
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Fehlerstatistik 
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:HeaderColumnsLogFile"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang british
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Todo Zuordnung der Betroffenen Einheiten
+\end_layout
+
+\begin_layout Plain Layout
+Statistiken für Sensoren -> Häufigkeitsverteilung, Max, Min Value der gesamten
+ Laufzeit ausschließlich für Originalwerte die alle tests bestanden haben.
+ Fourier or spectrum analysis??
+\end_layout
+
+\begin_layout Plain Layout
+Statistiken über Fehlerkorrekturmassnahmen ? Motivation für Projektadmins?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Format Fehlerdokumentations / Korrekturdatei
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Format-Fehlerdokumentations-/"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Der Dateiname einer Fehlerkorrekturdateien ergibt sich aus dem Namen der
+ Datei die den Fehler mit der letzten Dateierweiterung ersetzt durch die
+ Endung 
+\family typewriter
+.corr
+\family default
+.
+ Sie dienen der Dokumentation aller durch den Admin oder durch das System
+ vorgenommenen Korrekturen am Originaldatenstatz.
+ Neben den JSON-Keywords existieren innerhalb dieser Datei zwei Schlüsselwörter,
+ die für das System reserviert sind und nicht durch den Anwender in den
+ Dateinamen oder Headerinformationen verwendet werden dürfen.
+\end_layout
+
+\begin_layout Enumerate
+FIXME - Dieses Schlüsselwort markiert alle Datenstellen die durch den Projektadm
+in korrigiert werden müssen.
+ Die Korrektur muss vollständig erfolgen.
+ Eine Korrekturdatei die den Terminus FIXME bei erneuter Prüfung des Datensatzes
+ enthält wird durch den nächsten Folgeschritt nicht akzeptiert und ggf.
+ überschrieben.
+ Alle bereits durchgeführten Korrekturen können dadurch verlohren gehen.
+\end_layout
+
+\begin_layout Enumerate
+ACCEPT - Dieses Schlüsselwort markiert Fehler die nicht Korrigiert werden
+ können und als Datenlücken im Archiv durch den Admin akzeptiert werden.
+ 
+\end_layout
+
+\begin_layout Standard
+Daneben unterstützt das JSON-Format der Fehlerdokumentationsdatei folgende
+ Keywords.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="2">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="left" valignment="top" width="10cm">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+Keyword
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\size footnotesize
+Beschreibung
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Filter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+ Definiertes Keyword das den Filter bennent welcher den Fehler identifiziert
+ hat.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+IncidentType
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+ Nummer des Fehlerstyps der durch den Filter erkannt wurde.
+ Jeder Filter kann mehrere Fehlertypen erkennen.
+ 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+ReportDate
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Um Statistiken zur Fehlererkennung und Korrektur zu ermöglichen wird der
+ Zeitpunkt der Fehlerbehebung festgehalten.
+ Der Zeitstempel ist definiert als Folge 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+<date> <time>
+\end_layout
+
+\end_inset
+
+ separiert durch eine Leerzeichen.
+ Dieser Zeitstempel von vorherigen Korrekturdateien wird überschreiben wenn
+ die Originaldatei mit der Korrektur ins Archiv verschoben wird.
+ Das erste auftreten eines Fehlers ist im Datum der Messwerte kodiert.
+ Das <date> Format für den Tag ist definiert als: 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+<yyyy>-<mm>-<dd>
+\end_layout
+
+\end_inset
+
+, wobei Monat und Tag zwingend zweistellig sein müsssen.
+ Führende Nullen sind zu ergänzen.
+ Das Format beinhaltet Schalttage.<Time> definiert den Zeitpunkt an dem die
+ Korrektur angelegt wurde.
+ Dies wird ebenfalls beim Überführen ins Archiv festgehalten.
+ Das Format für einen Zeitstempel ist definiert: 
+\begin_inset listings
+inline true
+status open
+
+\begin_layout Plain Layout
+
+<hour>-<minute>-<second>
+\end_layout
+
+\end_inset
+
+, wobei hour, minute and second zwei Stellen besitzen müssen.
+ Führende Nullen sind zu ergänzen.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Period
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Sollperiode für Daten dieser Datei, Kopie der Information aus Expentancy
+ file.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+ErrorIndex
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+ Zeilenindex des Fehlers.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+HeaderTemplate
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+ Dateipfad zur korrespondierenden HeaderTemplate-Datei.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+LastSample
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Enthält die letzte korrekte Datenzeile vor dem zu behandelden Fehler.
+ 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Correction
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Beinhaltet das Array mit den Änderungen des Projektadmin für den betreffenden
+ Datenbereich.
+ Die Korrekturen müssen für alle behandelten Fehler vollständig sein.
+ Eine Verkettung von Korrekturen durch mehrere Korrekturdateien ist nicht
+ zulässig.
+ Es sind alle Informationen der betroffenen Datenzeilen vollständig anzugeben.
+ Einträge des Schlüsselwortes FIXME bei erneuter Prüfung sind unzulässig.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:BeschreibungKeyWordCorrection"
+
+\end_inset
+
+Tests und entsprechende Logeinträge.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Beispiel eines Correction File für den Ausfall der gesamten Messtechnik
+ über eine Zeitdauer.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "caption={Example for a Correction File (Periode Entry)},frame={bottomline},framexbottommargin={4pt},framexleftmargin={17pt},framexrightmargin={5pt},label={list:Example-restart},xleftmargin={17pt}"
+inline false
+status open
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\begin_layout Plain Layout
+  "Filter"         : "SingleValueCheck",
+\end_layout
+
+\begin_layout Plain Layout
+  "IncidentType"   : "Single",
+\end_layout
+
+\begin_layout Plain Layout
+  "ReportDate"     : "2015-11-22 09:22:11",
+\end_layout
+
+\begin_layout Plain Layout
+  "Period"         : "5min",
+\end_layout
+
+\begin_layout Plain Layout
+  "ErrorIndex"     : 124,
+\end_layout
+
+\begin_layout Plain Layout
+  "HeaderTemplate" : "./p1.2/demo2_2016.ref",
+\end_layout
+
+\begin_layout Plain Layout
+  "LastSample"     : "2015-11-10 00:05:00,Rasp01_SerAhl_G01,275.15,94.1,Rasp01_Ser
+Ahl_G02,12,,,5.49",
+\end_layout
+
+\begin_layout Plain Layout
+  "NextSample"     : "2015-11-10 00:20:00,Rasp01_SerAhl_G01,275.15,94.1,Rasp01_Ser
+Ahl_G02,7,,,5.49",
+\end_layout
+
+\begin_layout Plain Layout
+  "Correction"     : ["2015-11-10 00:10:00,Rasp01_SerAhl_G01,FIXME,FIXME,Rasp01_
+SerAhl_G02,FIXME,,,FIXME",
+\end_layout
+
+\begin_layout Plain Layout
+					  "2015-11-10 00:15:00,Rasp01_SerAhl_G01,FIXME,FIXME,Rasp01_SerAhl_G02,FIXM
+E,,,FIXME"]
+\end_layout
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Script-Ausführungsergebnisse/Ergebnisdateien
+\end_layout
+
+\begin_layout Subsection
+Rückgabewert
+\end_layout
+
+\begin_layout Standard
+Das Skript liefert einen Rückgabewert von 0, wenn kein Fehler aufgetreten
+ ist.
+ Im Falle eines Fehlers wird 1 zurückgeliefert.
+ In diesem Fall stehen im Error-Log die entsprechend aufgetretenen Fehler,
+ und ggfs.
+ in der Datei 
+\family typewriter
+log/missing
+\family default
+ eine Liste mit fehlenden Dateien.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Log-Dateien"
+
+\end_inset
+
+Log-Dateien
+\end_layout
+
+\begin_layout Standard
+Es gibt drei Log-Dateitypen im Unterverzeichnis 
+\family typewriter
+log
+\family default
+.
+\end_layout
+
+\begin_layout Subsubsection
+Process-Log
+\end_layout
+
+\begin_layout Standard
+In der Datei 
+\family typewriter
+log/processed
+\family default
+ werden allgemeine Ausgaben des Skripts abgelegt.
+ Darin wird ersichtlich, welche Dateien erfolgreich archiviert wurden.
+ 
+\end_layout
+
+\begin_layout Standard
+Jede Zeile in der Logdatei hat das folgende Format:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+<Zeitstempel>
+\backslash
+t<Kategorie>
+\backslash
+t<Datei>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+wobei 
+\family typewriter
+
+\backslash
+t
+\family default
+ ein Tabulatorzeichen ist.
+ Beispielsweise:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+2019-08-12 15:06:15  Archiving  TestHaus/demo2_2017-10-23_23-59-00.csv
+\end_layout
+
+\begin_layout Plain Layout
+
+2019-08-12 15:07:41  Error      TestHaus/sw-11-we-0-00-BTM_2016-03-02_00-00-00.cs
+v
+\end_layout
+
+\begin_layout Plain Layout
+
+2019-08-12 15:08:20  Error      TestHaus/demo2_2017-10-23_23-57-00.csv
+\end_layout
+
+\begin_layout Plain Layout
+
+2019-08-12 15:08:20  Bypassing  TestHaus/ignored_TestFile.txt
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Die folgenden Kategorien werden verwendet:
+\end_layout
+
+\begin_layout Description
+Error Zeigt einen Fehler bei einer Datei an (Eingangsprüfung fehlgeschlagen
+ etc.).
+ Details dazu stehen im Error-Log.
+\end_layout
+
+\begin_layout Description
+Archiving Die Datei wurde erfolgreich archiviert (ins 
+\family typewriter
+archive
+\family default
+-Verzeichnis verschoben).
+\end_layout
+
+\begin_layout Description
+Bypassing Die Datei wurde ins 
+\family typewriter
+bypass
+\family default
+-Verzeichnis verschoben.
+\end_layout
+
+\begin_layout Description
+Corrected Eine Korrektur wurde an der Datei angewendet.
+ Zumeist gefolgt von zwei Logeinträgen vom Typ 'Archiving', einer für die
+ originale Datei und einer für die korrigierte Datei.
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\emph on
+Hinweis:
+\emph default
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "90col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Die Process-Log-Datei kann in einer Tabellenkalkulation wie LibreOffice
+ direkt eingeladen werden und dann über 
+\family typewriter
+Daten->AutoFilter
+\family default
+ in eine Tabelle mit Kategorie-Filterfunktion umgewandelt werden.
+ Auf diese Weise lassen sich übersichtliche Listen der abgearbeiteten Datendatei
+en generieren.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Error-Log
+\end_layout
+
+\begin_layout Standard
+In der Datei 
+\family typewriter
+log/errors_<Zeitstempel>
+\family default
+ sind fehlgeschlagene Tests je Datei detailliert aufgeführt.
+ Diese Datei kann/sollte vom Projektbearbeiter nach erfolgreicher Korrektur
+ des Fehlers gelöscht werden.
+ Dadurch kann die Existenz der Datei als Indikator für Fehlerzustände genutzt
+ werden.
+ Gleichzeitig ist der Inhalt der Datei sinnvoll für die Darstellung auf
+ der Mess-Projekt-Informations-Webseite (Dashboard).
+\end_layout
+
+\begin_layout Standard
+Jede Zeile in der Logdatei hat das folgende Format:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+<Kategorie>
+\backslash
+t<Datei>
+\backslash
+t<Optionale detaillierte Beschreibung>
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+wobei 
+\family typewriter
+
+\backslash
+t
+\family default
+ ein Tabulatorzeichen ist.
+ Beispielsweise:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+NotExpected               TestHaus/demo2_2017.csv
+\end_layout
+
+\begin_layout Plain Layout
+
+InvalidHeader             TestHaus/sw-11-we-0-00-BTM_2016-03-02_00-00-00.csv
+\end_layout
+
+\begin_layout Plain Layout
+
+FileSizeMismatch          TestHaus/demo2_2017-10-23_23-57-00.csv        
+     File size 65378 out of range [64000..65000].
+\end_layout
+
+\begin_layout Plain Layout
+
+InvalidSamplingInterval   TestHaus/demo3_2017-10-23_23-57-00.csv        
+     Interval between 2019-08-09 12:00:00 and 2019-08-09 15:00:05 too long
+ (10805 s but expected 120 s).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Fehlende-Dateien
+\end_layout
+
+\begin_layout Standard
+In der Datei 
+\family typewriter
+log/missing
+\family default
+ stehen alle Dateien, die sich eigentlich bereits im 
+\family typewriter
+archive
+\family default
+-Verzeichnis befinden sollten (siehe Abschnitt
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Vollständigkeitsprüfungen"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Section
+Fehlerbehandlung
+\end_layout
+
+\begin_layout Standard
+Sobald eine Eingangsprüfung oder inhaltliche Prüfung fehlgeschlagen ist,
+ wird die jeweilige Messdatendatei in das review-Verzeichnis verschoben.
+ Je nach Fehlertyp sind folgende Fehlerbehandlungen sinnvoll.
+\end_layout
+
+\begin_layout Subsection
+InvalidHeader - Nur Zeichenkodierung
+\end_layout
+
+\begin_layout Standard
+Dies ist ein Fehler bei der Konfiguration des Messclients.
+\end_layout
+
+\begin_layout Enumerate
+Messclient-Fehler beheben
+\end_layout
+
+\begin_layout Enumerate
+Zeichenkodierung in Dateien korrigieren.
+ Falls UTF-8 verwendet wird (empfohlen), kann das Skript 
+\family typewriter
+iconv_all.sh
+\family default
+ im 
+\family typewriter
+review
+\family default
+-Verzeichnis ausgeführt werden.
+ Es konvertiert alle nicht-UTF-8-Dateien in UTF-8 Zeichenkodierung.
+ Danach können alle konvertierten Dateien wieder in das 
+\family typewriter
+dropbox
+\family default
+-Verzeichnis verschoben werden.
+\end_layout
+
+\begin_layout Subsection
+InvalidHeader - Fehler ohne Einfluss auf Datenspalten
+\end_layout
+
+\begin_layout Standard
+Dies ist ein Feher bei der (Um-)Konfiguration des Messclients.
+\end_layout
+
+\begin_layout Enumerate
+Messclient-Fehler beheben/neu konfigurieren
+\end_layout
+
+\begin_layout Enumerate
+Header aller betroffenen Dateien manuell korrigieren (Inhalt des Referenzheaders
+ kopieren).
+ Danach können alle korrigierten Dateien wieder in das 
+\family typewriter
+dropbox
+\family default
+-Verzeichnis verschoben werden.
+\end_layout
+
+\begin_layout Subsection
+InvalidHeader - SensorenIDs stimmen nicht
+\end_layout
+
+\begin_layout Standard
+Beispiel:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+InvalidHeader       	WsIBK_2019-08-21_12-26-25.csv                     	Header
+ line mismatch:
+\end_layout
+
+\begin_layout Plain Layout
+
+Expected: Channel,WsIBK_SerAhl_G01,M00,M01,M02,M03,M04,,,,,,,,M12,M13,M14,,,,,,,
+,M22,,,,,,,,,,,M33,M34
+\end_layout
+
+\begin_layout Plain Layout
+
+Current:  Channel,WsIBK_SerAhl_G01,M00,,,,M04,,,,,,,,,,,,,,,,,,,,,,,,,,,,,M33,
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dieser Fehler liegt an einer falschen/Neu-Konfiguration des Messclients
+ bzw.
+ an ausgefallenen Sensoren.
+ Hier ist eine intensivere Fehlersuche notwendig, bzw.
+ eine Neuerstellung der Datei.
+\end_layout
+
+\begin_layout Subsection
+EmptyFile
+\end_layout
+
+\begin_layout Standard
+Falls eine Datei komplett leer ist, wurde vermutlich die Verbindung bei
+ der Übertragung beendet.
+ In diesem Fall muss geprüft werden, ob die Datei zu einem späteren Zeitpunkt
+ noch einmal übertragen werden kann (z.B.
+ wenn der Messclient versucht, Dateien solange zu übertragen, bis die Datei
+ komplett am Ziel angekommen ist).
+ In diesem Fall kann die Datei gelöscht werden.
+ Falls die Datei gar nicht existiert hat, bzw.
+ bereits auf dem Messclient leer war, muss die Datei als 
+\emph on
+fehlende Datei 
+\emph default
+vermerkt werden.
+ 
+\series bold
+WIE?
+\end_layout
+
+\begin_layout Subsection
+FileSizeMismatch
+\end_layout
+
+\begin_layout Standard
+Grundsätzlich können sich die Dateigrößen der zu erwartenden Dateien geringfügig
+ unterscheiden, z.B.
+ wenn Luftdrücke im Bereich 1003 hPa und 998 hPa gemessen wurden, so haben
+ die Dateien je Zeile 1 Byte Größenunterschied.
+ Ähnlich ist dies bei allen anderen Zahlen möglich.
+ Daher ist die Dateigröße als Bereich anzugeben, sofern kein Festzahlenformat
+ mit exakter Größe im Messclient konfiguriert ist.
+ 
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\emph on
+Hinweis:
+\emph default
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "90col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Um einen ungefähren Überblick über die sinnvollen Bereichsgrenzen für den
+ Größencheck zu erhalten, kann das Script 
+\family typewriter
+fileSizeHistogram.py
+\family default
+ ausgeführt werden.
+ Es liefert für alle Dateien eines Verzeichnisses ein Histogramm der Dateigrößen
+ und die min/max-Werte der Dateigrößen.
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+Beispiel:
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> python fileSizeHistogram.py /path/to/project/dropbox
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Falls die Dateigröße dennoch außerhalb des zulässigen Bereichs liegt, fehlen
+ vermutlich Daten.
+ Da der Header vor der Dateigröße geprüft wird, können Größenunterschiede
+ nicht auf unterschiedliche Header zurückgeführt werden und es muss an den
+ Daten liegen.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Hinweis:
+\emph default
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "90col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+Ein Grund für fehlerhafte Dateigrößen kann das Neustarten des Messsystems
+ sein.
+ In diesem Fall wird je nach Konfiguration eine neue Datei erstellt, und
+ diese ergänzt dann die bisherige Datei mit Zeitstempel 00:00:00.
+ Solche getrennten Messdaten können mit dem Script 
+\family typewriter
+mergeFiles.py
+\family default
+ einfach zusammengefasst werden.
+ Als Argument übergibt man den Pfad zu einer der aufgeteilten Dateien und
+ gibt den Dateinamen bis einschließlich des Datums an, jedoch ohne Zeitstempel
+ und Dateierweiterung.
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+Beispiel:
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> python mergeFiles.py /path/to/project/review/WsIBK_2019-09-11
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Durch diesen Aufruf werden beispielsweise die Dateien 
+\family typewriter
+WsIBK_2019-09-11_00-00-00.csv
+\family default
+ und 
+\family typewriter
+WsIBK_2019-09-11_12-22-05.csv
+\family default
+ zusammengefasst und in die Datei 
+\family typewriter
+WsIBK_2019-09-11_00-00-00.csv
+\family default
+ geschrieben (die originalen Dateien werden umbenannt, wobei an den jeweiligen
+ Dateinamen 
+\family typewriter
+.orig
+\family default
+ angehängt wird).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

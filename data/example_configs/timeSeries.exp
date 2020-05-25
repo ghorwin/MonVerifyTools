@@ -1,0 +1,13 @@
+{
+    "configServer" : {
+	"correctionFileFormat" : "binary"
+    },
+    "expectedFiles" : [
+	["./notworkingMultipleLogger/DemoSys_","IBK_TimeSeries",19836,0,293,0,0,4,"./workingMultipleLogger/DemoSys.ref","DemoSys.phy",60],
+	["./workingMultipleLogger/DemoSys_","IBK_TimeSeries",19836,0,293,0,0,4,"./workingMultipleLogger/DemoSys.ref","DemoSys.phy",60],
+	["./workingSingleLogger/DemoSys_","IBK_TimeSeries",12740,0,293,0,0,4,"./workingSingleLogger/DemoSys.ref","DemoSys.phy",60]
+    ],
+    "bypassFiles" : [
+	"./notworkingMultipleLogger/DemoSys_"
+	]
+}
