@@ -6,4 +6,4 @@ This directory contains the actual scripts:
 - `mergeFiles.py` utility script to merge two data files that were split due to reboot of data logger/client
 - `fileSizeHistogram.py` utility script to generate a histogram of file sizes from a set of data files in a directory, can be useful to determine meaningful lower and upper limits for expected file sizes
 - `createMonToolProject.sh` shell script to create a directory structure and assign suitable permissions and group/user ownership to get some security into the data acquisition process
-
+- `iconv_all.sh` utility script to convert files to utf-8 encoding (default encoding expected by MonVerifyTools)
