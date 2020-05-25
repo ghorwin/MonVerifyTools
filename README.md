@@ -20,6 +20,6 @@ Basically, you can think of the *MonVerifyTools* as a quality assurance interim 
 
 ## How?
 
-![Overview](docs/Overview.png)
+![Overview](doc/Overview.png)
 
 ...see docs. TODO...
