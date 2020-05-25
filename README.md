@@ -8,7 +8,7 @@ These tools and the methodology were developed at the [Institut für Bauklimatik
 
 - EnEff:Stadt - Verbundvorhaben: *Modellhaftes innerstädtisches Gebiet "Altes Zöllnerviertel Weimar"* (FKZ 03ET1173C)
 - *Forschungsprüfstand für multtifunktiionale aktive Fassadensysteme mit Raumankopplung*, im Rahmen der SAB Förderung "Anwendungsorientierte Forschung an innovativen Energietechniken"
-- *"Carbon Concrete Composite C³" - Carbonbeton mit integrierten bauklimatischen Funktionen*, ein Zwandzig20 C³ Projekt (BMBF)
+- *"Carbon Concrete Composite C³" - Carbonbeton mit integrierten bauklimatischen Funktionen*, ein Zwanzig20 C³ Projekt (BMBF)
 
 
 ## Motivation
