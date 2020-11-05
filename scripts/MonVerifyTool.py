@@ -102,7 +102,7 @@ def checkForMissingFiles(archiveDir, projectConfig):
 		printError("There are {} missing files.".format(len(missingFiles)) )
 		error_log('MissingFiles', "", "There are {} missing files.".format(len(missingFiles)) )
 		
-	return retcode
+	return (retcode,len(missingFiles))
 
 
 # ---- main ----
@@ -272,10 +272,47 @@ for root, dirs, files in os.walk(dropboxDir, topdown=False):
 
 # ---- check for missing files ----
 
-retCodeMissingFiles = checkForMissingFiles(archiveDir, projectConfig)
+if retcode != 0:
+	print("Errors:")
+	errLogFilename = logDir + "/errors_{}".format(Logger.TIME_STAMP)
+	if os.path.exists(errLogFilename):
+		fobj = open(errLogFilename, 'r')
+		print(fobj.read())
+		del fobj
+
+retCodeMissingFiles, missingFileCount = checkForMissingFiles(archiveDir, projectConfig)
 if retCodeMissingFiles == 1:
 	retcode = retCodeMissingFiles
+	# print list of missing files as error to log
+	print("\nList of missing files:")
+	if os.path.exists(logDir + "/missing"):
+		fobj = open(logDir + "/missing")
+		print(fobj.read())
+		del fobj
+	
 
+print("\nRemaining files:")
+
+# if review directory is not empty, print list of open files
+revFileCount = 0
+for root, dirs, files in os.walk(reviewDir, topdown=False):
+	rootStr = root.replace('\\', '/') # windows fix
+	pathParts = rootStr.split('/') # split into component
+	pathParts = pathParts[len(dropboxPathParts):] # keep only path parts below toplevel dir
+	for f in files:
+		relFile = "/".join(pathParts) + "/" + f
+		print(relFile)
+		revFileCount = revFileCount + 1
+
+print("")
+
+if revFileCount != 0:
+	print("There are {} files remaining in the review directory".format(revFileCount))
+	retcode = 1
+
+if missingFileCount != 0:
+	print("There are {} missing files".format(missingFileCount))
+	retcode = 1
 
 # return signaling caller the result: 0 = success, 1 = have error(s)
 exit(retcode)
