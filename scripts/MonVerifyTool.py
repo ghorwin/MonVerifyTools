@@ -33,6 +33,7 @@ import platform
 import argparse
 import shutil # for copyfile
 import datetime
+import glob
 
 from print_funcs import *
 from ConfigFiles import ConfigFiles
@@ -156,6 +157,24 @@ def checkForMissingFiles(archiveDir, reviewDir, projectConfig):
 	return (retcode,len(missingFiles))
 
 
+def copy(src, dest, pattern='.csv'):
+	"""Utility function to recursively copy a directory structure, or rather
+	only files in a directory structure with a given pattern.
+	Existing files in target location are not overwritten.
+	"""
+
+	for root, dirs, files in os.walk(src):
+		for f in files:
+			if f[-len(pattern):].lower() == pattern:
+				# if target file does not exist, move the file from review to dropbox
+				targetFile = os.path.join(dest, f)
+				if not os.path.exists(targetFile):
+					shutil.move(os.path.join(root, f), targetFile)
+				else:
+					print("File {} in review directory already exists as {} in dropbox!".format(f, targetFile))
+					exit(1) # this is a critical error
+
+
 # ---- main ----
 
 # command line arguments
@@ -231,10 +250,17 @@ if len(projectConfig.expectedFiles) == 0:
 	exit(1)
 
 
+# ---- transfer files from review directory to dropbox directory ----
+
+# directory structure is copied recursively
+# note, existing files in 'dropbox' cause script to abort
+copy(reviewDir, dropboxDir)
+	
 # ---- check for new files in dropbox directory ----
 
 dropboxPathParts = dropboxDir.split('/') # split into path components
 
+archivedFileCount = 0
 for root, dirs, files in os.walk(dropboxDir, topdown=False):
 
 	rootStr = root.replace('\\', '/') # windows fix
@@ -321,6 +347,7 @@ for root, dirs, files in os.walk(dropboxDir, topdown=False):
 
 		# all successful, move to archive
 		print("Archiving file '{}'.".format(newFilePath))
+		archivedFileCount = archivedFileCount + 1
 		process_log('Archiving', newFilePath)
 		# move file to archive folder
 		# first create subdirectory, if not existing
@@ -351,7 +378,7 @@ if retCodeMissingFiles == 1:
 		del fobj
 	
 
-print("\nRemaining files:")
+print("\nRemaining files in review directory:")
 
 # if review directory is not empty, print list of open files
 revFileCount = 0
@@ -367,11 +394,15 @@ for root, dirs, files in os.walk(reviewDir, topdown=False):
 print("")
 
 if revFileCount != 0:
-	print("There are {} files remaining in the review directory".format(revFileCount))
+	print("There are {} files remaining in the review directory.".format(revFileCount))
 	retcode = 1
 
 if missingFileCount != 0:
-	print("There are {} missing files".format(missingFileCount))
+	print("There are {} missing files.".format(missingFileCount))
+	retcode = 1
+
+if archivedFileCount != 0:
+	print("{} files were successfully archived.".format(archivedFileCount))
 	retcode = 1
 
 # return signaling caller the result: 0 = success, 1 = have error(s)
