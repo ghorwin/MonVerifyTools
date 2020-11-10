@@ -244,6 +244,15 @@ for root, dirs, files in os.walk(dropboxDir, topdown=False):
 			retcode = 1
 			continue
 		
+		# skip files of current day
+		# split filename at _
+		tokens = nf.split('_')
+		if len(tokens) == 3 and len(tokens[1])==10:
+			fileDate = datetime.datetime.strptime(tokens[1], '%Y-%m-%d')
+			todaysDate = datetime.datetime.today()
+			if fileDate.date() == todaysDate.date():
+				continue # ignore file in dropbox
+		
 		# apply entry checks
 		if not projectConfig.entryCheckPassedForFile(dropboxDir, newFilePath, matchingEf):
 			printError("Entry check failed for file '{}'.".format(newFilePath))

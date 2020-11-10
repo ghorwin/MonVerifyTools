@@ -144,6 +144,33 @@ class ConfigFiles:
 				for bypassRule in data['BypassFiles']:
 					self.bypassRules.append( bypassRule )
 
+	def extractTimeStamp(self, fname):
+		"""Extracts time stamp from filename.
+		
+		Returns:
+		
+		(success, timeStamp)
+		"""
+		
+		tokens = filename.split('_')
+		if len(tokens) != 3:
+			return (False, None)
+		else:
+			dstring = tokens[1]
+			tstring = tokens[2]
+			# date stamp is of format 'yyyy-mm-dd'
+			if len(dstring) != 10 or dstring[4] != '-' or dstring[7] != '-':
+				return (False, None)
+			# time stamp is of format 'HH-MM-ss.csv'
+			if len(tstring) != 12 or tstring[2] != '-' or tstring[5] != '-':
+				return (False, None)
+		
+		# now parse time stamp
+		try:
+			ts = datetime.strptime(tokens[0], "%Y-%m-%d %H:%M:%S")
+		except ValueError:
+			return (False, None)
+		
 
 	def bypassRuleAppliesToFile(self, fname):
 		"""Tests, if the filename (full path relative to dropbox folder)
@@ -183,7 +210,7 @@ class ConfigFiles:
 
 		Note: Entry checks are only those that do not require reading the
 		content of the entire file.
-
+		
 		Arguments
 		---------
 		
