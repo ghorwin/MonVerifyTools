@@ -39,12 +39,60 @@ from ConfigFiles import ConfigFiles
 from Logger import process_log, error_log
 import Logger
 
-def checkForMissingFiles(archiveDir, projectConfig):
+def checkForMissingFiles(archiveDir, reviewDir, projectConfig):
+	"""
+	Generates file names (based on the expectation file) for all expected files and tests, if these
+	are present in the archiveDir *or* in the reviewDir.
+	Also, a file reviewDir/missing.accepted is merged with archiveDir/missing.accepted. The files listed
+	in archiveDir/missing.accepted are ignored in the missing test.
+	"""
+	
+	missingAcceptedFile = archiveDir + '/missing.accepted'
+	missingAcceptedFileReview = reviewDir + '/missing.accepted'
+	
+	# now read in missing files that were already accepted as missing from $archivedir/missing.accepted file
+	acceptedMissing = dict()
+	if os.path.exists(missingAcceptedFile):
+		lines = []
+		with open(missingAcceptedFile, 'r') as fobj:
+			lines = fobj.readlines()
+		for l in lines:
+			l = l.strip()
+			if len(l) == 0:
+				continue
+			i = l.find(" ")
+			if i == -1:
+				acceptedMissing[l] = '' # no comment for file
+			else:
+				acceptedMissing[l[0:i]] = l[i:]
+	
+	if os.path.exists(missingAcceptedFileReview):
+		lines = []
+		with open(missingAcceptedFileReview, 'r') as fobj:
+			lines = fobj.readlines()
+		for l in lines:
+			l = l.strip()
+			if len(l) == 0:
+				continue
+			i = l.find(" ")
+			if i == -1:
+				acceptedMissing[l] = '' # no comment for file
+			else:
+				acceptedMissing[l[0:i]] = l[i:]
+		# and remove the missing.accepted file now
+		os.remove(missingAcceptedFileReview)
+	
+	# now dump out the missing file again
+	if len(acceptedMissing) != 0:
+		with open(missingAcceptedFile, 'w') as fobj:
+			for k in sorted(acceptedMissing):
+				fobj.write("{} {}\n".format(k, acceptedMissing[k].strip()))
+	
 	# first collect a list of expected files
-	archivesFiles = dict() # key is the expected file prefix, value is a list a of files found in archive directory
+	archivedFiles = dict() # key is the expected file prefix, value is a list a of files found in archive directory
 	# initialize map
 	for exp in projectConfig.expectedFiles:
-		archivesFiles[exp] = []
+		archivedFiles[exp] = []
 	
 	# now process all files in archive dir
 	archivePathParts = archiveDir.split('/') # split into path components
@@ -64,18 +112,19 @@ def checkForMissingFiles(archiveDir, projectConfig):
 			# insert into appropriate list
 			for exp in projectConfig.expectedFiles:
 				if newFilePath.find(exp) == 0:
-					archivesFiles[exp].append(nf)
+					archivedFiles[exp].append(nf)
 					break
+	
 	
 	missingFiles = []
 	
 	# now process all directories and get a sorted list
 	for exp in projectConfig.expectedFiles:
-		af = sorted(archivesFiles[exp])
+		af = sorted(archivedFiles[exp])
 		# skip empty directories/not existing expected files
 		if len(af) == 0:
-			# only mention that todays file is missing
-			missingFiles.append( exp + datetime.datetime.today().strftime('%Y-%m-%d_00-00-00.csv') )
+			# we skip todays file, so there's nothing to report
+			# missingFiles.append( exp + datetime.datetime.today().strftime('%Y-%m-%d_00-00-00.csv') )
 			continue 
 	
 		# if list is not empty, get the first time stamp
@@ -87,7 +136,9 @@ def checkForMissingFiles(archiveDir, projectConfig):
 		while d <= todaysDate:
 			dStr = exp + d.strftime('%Y-%m-%d_00-00-00.csv')
 			if not dStr in af:
-				missingFiles.append( dStr )
+				# only add missing files if they are not in the accepted list
+				if not dStr in acceptedMissing:
+					missingFiles.append( dStr )
 			d = d + datetime.timedelta(1) # add one day
 	
 	retcode = 0
@@ -289,7 +340,7 @@ if retcode != 0:
 		print(fobj.read())
 		del fobj
 
-retCodeMissingFiles, missingFileCount = checkForMissingFiles(archiveDir, projectConfig)
+retCodeMissingFiles, missingFileCount = checkForMissingFiles(archiveDir, reviewDir, projectConfig)
 if retCodeMissingFiles == 1:
 	retcode = retCodeMissingFiles
 	# print list of missing files as error to log
