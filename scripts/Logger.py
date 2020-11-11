@@ -12,8 +12,9 @@ Log file writer implementation.
 """
 
 import datetime
-
+import os
 from print_funcs import *
+
 
 LOG_DIR = "" # set in MonVerifyTool script
 TIME_STAMP = "" # time stamp for start of main script run, set in MonVerifyTool script
@@ -45,6 +46,12 @@ def error_log(category, filepath, message):
 	- message
 		The message text.
 	"""
-	with open(LOG_DIR + "/errors_{}".format(TIME_STAMP), 'a') as f:
+	todaysErrorLogFile = LOG_DIR + "/errors_{}".format(TIME_STAMP)
+	with open(todaysErrorLogFile, 'a') as f:
 		f.write("{:20s}\t{:50s}\t{}\n".format(category, filepath, message))
 
+	# create/update symlink to current error log file
+	errorSymlinkFile = LOG_DIR + "/errors"
+	if not os.path.exists(errorSymlinkFile) or os.path.realpath(errorSymlinkFile) != os.path.realpath(todaysErrorLogFile):
+		os.symlink(todaysErrorLogFile, errorSymlinkFile+".tmp")
+		os.rename(errorSymlinkFile+".tmp", errorSymlinkFile)
